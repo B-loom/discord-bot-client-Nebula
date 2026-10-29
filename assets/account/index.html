@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<title>Nebula - Connexion au compte</title>
+		<style>
+			:root {
+				--bg: #1a1b2e;
+				--card: #2b2d31;
+				--input: #1e1f22;
+				--text: #f2f3f5;
+				--muted: #b5bac1;
+				--accent: #5865f2;
+				--accent-hover: #4752c4;
+				--danger: #f23f43;
+				--border: #3f4147;
+			}
+			* {
+				box-sizing: border-box;
+				font-family: "gg sans", "Segoe UI", Helvetica, Arial, sans-serif;
+			}
+			html,
+			body {
+				margin: 0;
+				height: 100%;
+			}
+			body {
+				background: radial-gradient(circle at 30% 20%, #3b2d7a 0%, #1a1b2e 55%, #0f1020 100%);
+				color: var(--text);
+				display: flex;
+				/*
+				 * Plain centring clips the top of anything taller than the window, and
+				 * what is clipped cannot be scrolled back to. "safe" falls back to the
+				 * start edge in that case, so nothing is ever out of reach.
+				 */
+				align-items: safe center;
+				justify-content: center;
+				padding: 24px;
+				overflow-y: auto;
+			}
+			.card {
+				background: var(--card);
+				width: 100%;
+				max-width: 440px;
+				border-radius: 8px;
+				padding: 28px;
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+			}
+			h1 {
+				font-size: 22px;
+				margin: 0 0 6px;
+				text-align: center;
+			}
+			.sub {
+				color: var(--muted);
+				font-size: 14px;
+				text-align: center;
+				margin: 0 0 22px;
+			}
+			label {
+				display: block;
+				font-size: 12px;
+				font-weight: 700;
+				letter-spacing: 0.02em;
+				text-transform: uppercase;
+				color: var(--muted);
+				margin: 0 0 8px;
+			}
+			input {
+				width: 100%;
+				background: var(--input);
+				border: 1px solid transparent;
+				border-radius: 3px;
+				color: var(--text);
+				padding: 10px;
+				font-size: 15px;
+				outline: none;
+			}
+			input:focus {
+				border-color: var(--accent);
+			}
+			.field {
+				margin-bottom: 18px;
+			}
+			button {
+				width: 100%;
+				background: var(--accent);
+				color: #fff;
+				border: 0;
+				border-radius: 3px;
+				padding: 11px;
+				font-size: 14px;
+				font-weight: 600;
+				cursor: pointer;
+			}
+			button:hover:not(:disabled) {
+				background: var(--accent-hover);
+			}
+			button:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+			button.secondary {
+				background: transparent;
+				color: var(--muted);
+				font-weight: 500;
+				padding: 8px;
+				margin-top: 10px;
+			}
+			button.ghost {
+				background: var(--input);
+				color: var(--text);
+			}
+			button.ghost:hover:not(:disabled) {
+				background: #2f3136;
+			}
+			.separator {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				margin: 18px 0 14px;
+				color: var(--muted);
+				font-size: 12px;
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+			.separator::before,
+			.separator::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+			button.secondary:hover:not(:disabled) {
+				background: transparent;
+				color: var(--text);
+				text-decoration: underline;
+			}
+			.error {
+				background: rgba(242, 63, 67, 0.1);
+				border: 1px solid var(--danger);
+				color: #ffb3b5;
+				border-radius: 4px;
+				padding: 10px;
+				font-size: 13px;
+				margin-bottom: 16px;
+				display: none;
+				white-space: pre-wrap;
+			}
+			.error.show {
+				display: block;
+			}
+			.notice {
+				color: var(--muted);
+				font-size: 12px;
+				line-height: 1.5;
+				margin-top: 18px;
+				border-top: 1px solid var(--border);
+				padding-top: 14px;
+			}
+			/*
+			 * With a dozen saved accounts the list used to push the login form off the
+			 * bottom of the window. It scrolls on its own instead, so the form stays
+			 * where it is however many accounts are stored.
+			 */
+			.accounts {
+				margin-bottom: 20px;
+				max-height: 40vh;
+				overflow-y: auto;
+				padding-right: 4px;
+			}
+			.accounts::-webkit-scrollbar {
+				width: 8px;
+			}
+			.accounts::-webkit-scrollbar-thumb {
+				background: rgba(255, 255, 255, 0.14);
+				border-radius: 4px;
+			}
+			.accounts::-webkit-scrollbar-track {
+				background: transparent;
+			}
+			.account {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				background: var(--input);
+				border-radius: 4px;
+				padding: 8px 10px;
+				margin-bottom: 8px;
+			}
+			.account img {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				background: var(--accent);
+			}
+			.account .name {
+				flex: 1;
+				font-size: 14px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.account button {
+				width: auto;
+				padding: 6px 12px;
+				font-size: 12px;
+			}
+			.account button.remove {
+				background: transparent;
+				color: var(--muted);
+			}
+			.account button.remove:hover {
+				color: var(--danger);
+				background: transparent;
+			}
+			.mfa-methods {
+				display: flex;
+				gap: 8px;
+				margin-bottom: 14px;
+			}
+			.mfa-methods button {
+				background: var(--input);
+				color: var(--muted);
+				font-size: 12px;
+				padding: 7px;
+			}
+			.mfa-methods button.active {
+				background: var(--accent);
+				color: #fff;
+			}
+			.hidden {
+				display: none !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="card">
+			<!-- Step 1: credentials -->
+			<div id="step-login">
+				<h1>Content de te revoir !</h1>
+				<p class="sub">Connecte-toi avec ton compte Discord</p>
+				<div class="error" id="error-login"></div>
+				<div class="accounts" id="accounts"></div>
+				<div class="field">
+					<label for="login">Adresse e-mail ou numéro de téléphone</label>
+					<input id="login" type="text" autocomplete="off" spellcheck="false" />
+				</div>
+				<div class="field">
+					<label for="password">Mot de passe</label>
+					<input id="password" type="password" autocomplete="off" />
+				</div>
+				<button id="btn-login">Se connecter</button>
+				<div class="separator">ou</div>
+				<div class="field">
+					<label for="user-token">Token de compte</label>
+					<input id="user-token" type="password" autocomplete="off" spellcheck="false"
+						placeholder="Se connecter sans mot de passe" />
+				</div>
+				<button class="ghost" id="btn-user-token">Se connecter avec ce token</button>
+				<button class="secondary" id="btn-back">Revenir à la connexion par token de bot</button>
+				<p class="notice">
+					Ton adresse e-mail et ton mot de passe ne sont envoyés qu’à Discord, via la requête
+					<code>/api/v9/auth/login</code> faite par l’application. Seul le token obtenu est conservé sur cet
+					ordinateur, dans <code>accounts.json</code> du dossier de données de Nebula. Connecter un compte
+					utilisateur sur un client tiers est contraire aux conditions d’utilisation de Discord et peut
+					entraîner la désactivation du compte — à utiliser à tes risques.
+				</p>
+			</div>
+
+			<!-- Step 2: MFA -->
+			<div id="step-mfa" class="hidden">
+				<h1>Authentification à deux facteurs</h1>
+				<p class="sub" id="mfa-sub">Saisis le code à 6 chiffres de ton application d’authentification</p>
+				<div class="error" id="error-mfa"></div>
+				<div class="mfa-methods" id="mfa-methods"></div>
+				<div class="field">
+					<label for="mfa-code">Code</label>
+					<input id="mfa-code" type="text" inputmode="numeric" autocomplete="off" />
+				</div>
+				<button id="btn-mfa">Vérifier</button>
+				<button class="secondary" id="btn-mfa-cancel">Annuler</button>
+			</div>
+
+			<!-- Step 3: done -->
+			<div id="step-done" class="hidden">
+				<h1>Connecté</h1>
+				<p class="sub" id="done-name"></p>
+				<button id="btn-use">Ouvrir Discord avec ce compte</button>
+				<button class="secondary" id="btn-use-window">Ouvrir dans une nouvelle fenêtre</button>
+				<button class="secondary" id="btn-done-close">Fermer</button>
+			</div>
+		</div>
+
+		<script>
+			const $ = (id) => document.getElementById(id);
+			const api = window.accountAPI;
+			let ticket = null;
+			let mfaMethod = 'totp';
+			let lastAccount = null;
+
+			function show(step) {
+				['login', 'mfa', 'done'].forEach((s) =>
+					$('step-' + s).classList.toggle('hidden', s !== step),
+				);
+			}
+
+			function setError(scope, message) {
+				const el = $('error-' + scope);
+				el.textContent = message || '';
+				el.classList.toggle('show', Boolean(message));
+			}
+
+			function busy(button, isBusy, label) {
+				button.disabled = isBusy;
+				button.textContent = isBusy ? 'Patiente…' : label;
+			}
+
+			async function renderAccounts() {
+				const accounts = await api.listAccounts();
+				const container = $('accounts');
+				container.innerHTML = '';
+				if (!accounts.length) return;
+				const groups = [
+					['Comptes utilisateurs', accounts.filter((a) => !a.bot)],
+					['Bots', accounts.filter((a) => a.bot)],
+				];
+				groups.forEach(([groupName, groupAccounts]) => {
+					if (!groupAccounts.length) return;
+					const title = document.createElement('label');
+					title.textContent = groupName;
+					container.appendChild(title);
+					renderGroup(groupAccounts);
+				});
+			}
+
+			function renderGroup(accounts) {
+				const container = $('accounts');
+				accounts.forEach((account) => {
+					const row = document.createElement('div');
+					row.className = 'account';
+					const avatar = document.createElement('img');
+					avatar.src = account.avatar
+						? `https://cdn.discordapp.com/avatars/${account.id}/${account.avatar}.png?size=64`
+						: 'https://cdn.discordapp.com/embed/avatars/0.png';
+					const name = document.createElement('div');
+					name.className = 'name';
+					name.textContent = account.username;
+					const use = document.createElement('button');
+					use.textContent = 'Connexion';
+					use.onclick = () => api.useAccount(account.token);
+					const newWindow = document.createElement('button');
+					newWindow.className = 'remove';
+					newWindow.textContent = '⧉';
+					newWindow.title = 'Ouvrir dans une nouvelle fenêtre';
+					newWindow.onclick = () => api.openAccountWindow(account.token);
+					const remove = document.createElement('button');
+					remove.className = 'remove';
+					remove.textContent = '✕';
+					remove.title = 'Oublier ce compte';
+					remove.onclick = async () => {
+						await api.removeAccount(account.token);
+						renderAccounts();
+					};
+					row.append(avatar, name, use, newWindow, remove);
+					container.appendChild(row);
+				});
+			}
+
+			async function handleResult(result, scope) {
+				if (result.status === 'captcha') {
+					setError(scope, 'Discord demande un captcha. Résous-le dans la fenêtre qui vient de s’ouvrir.');
+					const key = await api.solveCaptcha(result.sitekey, result.rqdata);
+					if (!key) {
+						setError(scope, 'Captcha annulé.');
+						return;
+					}
+					setError(scope, '');
+					return handleResult(
+						await api.login($('login').value.trim(), $('password').value, {
+							key,
+							rqtoken: result.rqtoken,
+						}),
+						scope,
+					);
+				}
+				if (result.status === 'mfa') {
+					ticket = result.ticket;
+					const methods = (result.methods || []).map((m) => m.type);
+					renderMfaMethods(methods.length ? methods : ['totp']);
+					setError('mfa', '');
+					$('mfa-code').value = '';
+					show('mfa');
+					$('mfa-code').focus();
+					return;
+				}
+				if (result.status === 'success') {
+					lastAccount = result.account;
+					$('done-name').textContent = `Connecté en tant que ${result.account.username}`;
+					show('done');
+					renderAccounts();
+					return;
+				}
+				setError(scope, result.message || 'Échec de la connexion.');
+			}
+
+			function renderMfaMethods(methods) {
+				const container = $('mfa-methods');
+				container.innerHTML = '';
+				const labels = { totp: 'Application', sms: 'SMS', backup: 'Code de secours' };
+				mfaMethod = methods.includes('totp') ? 'totp' : methods[0];
+				methods
+					.filter((m) => labels[m])
+					.forEach((method) => {
+						const button = document.createElement('button');
+						button.textContent = labels[method];
+						button.className = method === mfaMethod ? 'active' : '';
+						button.onclick = async () => {
+							mfaMethod = method;
+							[...container.children].forEach((c) =>
+								c.classList.toggle('active', c === button),
+							);
+							$('mfa-sub').textContent =
+								method === 'sms'
+									? 'Saisis le code reçu par SMS'
+									: method === 'backup'
+										? 'Saisis un de tes codes de secours'
+										: 'Saisis le code à 6 chiffres de ton application d’authentification';
+							if (method === 'sms') {
+								const sent = await api.sendSms(ticket);
+								if (!sent.success) setError('mfa', sent.message);
+							}
+						};
+						container.appendChild(button);
+					});
+			}
+
+			$('btn-login').onclick = async () => {
+				setError('login', '');
+				busy($('btn-login'), true);
+				try {
+					const result = await api.login($('login').value.trim(), $('password').value);
+					await handleResult(result, 'login');
+				} catch (e) {
+					setError('login', String(e.message || e));
+				} finally {
+					busy($('btn-login'), false, 'Se connecter');
+				}
+			};
+
+			$('btn-mfa').onclick = async () => {
+				setError('mfa', '');
+				busy($('btn-mfa'), true);
+				try {
+					await handleResult(await api.mfa(ticket, $('mfa-code').value, mfaMethod), 'mfa');
+				} catch (e) {
+					setError('mfa', String(e.message || e));
+				} finally {
+					busy($('btn-mfa'), false, 'Vérifier');
+				}
+			};
+
+			$('btn-mfa-cancel').onclick = () => {
+				ticket = null;
+				show('login');
+			};
+			$('btn-use').onclick = () => lastAccount && api.useAccount(lastAccount.token);
+			$('btn-use-window').onclick = () => lastAccount && api.openAccountWindow(lastAccount.token);
+
+			$('btn-user-token').onclick = async () => {
+				const token = $('user-token').value.trim();
+				if (!token) {
+					setError('login', 'Colle le token du compte.');
+					return;
+				}
+				setError('login', '');
+				busy($('btn-user-token'), true);
+				try {
+					await handleResult(await api.loginWithToken(token), 'login');
+					$('user-token').value = '';
+				} catch (e) {
+					setError('login', String(e.message || e));
+				} finally {
+					busy($('btn-user-token'), false, 'Se connecter avec ce token');
+				}
+			};
+			$('btn-done-close').onclick = () => api.closeWindow();
+			$('btn-back').onclick = () => api.closeWindow();
+
+			['password', 'login'].forEach((id) =>
+				$(id).addEventListener('keydown', (e) => e.key === 'Enter' && $('btn-login').click()),
+			);
+			$('mfa-code').addEventListener('keydown', (e) => e.key === 'Enter' && $('btn-mfa').click());
+
+			renderAccounts();
+		</script>
+	</body>
+</html>

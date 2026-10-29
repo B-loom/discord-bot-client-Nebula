@@ -1,0 +1,63 @@
+
+.vc-bot-client-auth-box-token-login-defaultMarginh5 {
+    margin-bottom: 8px
+}
+
+.vc-bot-client-auth-box-token-login-h5 {
+    line-height: 20px;
+    color: var(--text-strong);
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: unset
+}
+
+.vc-bot-client-auth-box-token-login-error {
+    color: var(--text-feedback-critical)
+}
+
+.vc-bot-client-auth-box-token-login-errorMessage {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: var(--font-weight-medium)
+}
+
+.vc-bot-client-auth-box-token-login-errorSeparator {
+    padding-inline: 4px
+}
+
+.vc-bot-client-auth-box-token-login-separator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 12px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.vc-bot-client-auth-box-token-login-separator::before,
+.vc-bot-client-auth-box-token-login-separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle, var(--background-modifier-accent));
+}
+
+.vc-bot-client-auth-box-token-login-accountLink {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-link);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+}
+
+.vc-bot-client-auth-box-token-login-accountLink:hover {
+    text-decoration: underline;
+}

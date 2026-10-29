@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<title>Nebula - Captcha</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				height: 100%;
+				background: #2b2d31;
+				color: #f2f3f5;
+				font-family: "gg sans", "Segoe UI", Helvetica, Arial, sans-serif;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 16px;
+			}
+			p {
+				margin: 0;
+				font-size: 14px;
+				color: #b5bac1;
+			}
+		</style>
+		<script src="https://js.hcaptcha.com/1/api.js?onload=onHCaptchaLoad&render=explicit" async defer></script>
+	</head>
+
+	<body>
+		<p>Discord demande un captcha pour continuer.</p>
+		<div id="captcha"></div>
+
+		<script>
+			const params = new URLSearchParams(location.search);
+			const sitekey = params.get("sitekey");
+			const rqdata = params.get("rqdata");
+
+			function done(token) {
+				window.captchaAPI.resolve(token || null);
+			}
+
+			function onHCaptchaLoad() {
+				if (!sitekey) return done(null);
+				const id = hcaptcha.render("captcha", {
+					sitekey,
+					theme: "dark",
+					callback: done,
+					"error-callback": () => done(null),
+					"expired-callback": () => done(null),
+				});
+				if (rqdata) {
+					hcaptcha.setData(id, { rqdata });
+				}
+				hcaptcha.execute(id);
+			}
+
+			window.addEventListener("beforeunload", () => done(null));
+		</script>
+	</body>
+</html>

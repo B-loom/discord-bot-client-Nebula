@@ -1,0 +1,76 @@
+/* The local system channel is permanent: hide its close button in the DM list */
+a[href$="/channels/@me/1000000000000000000"] [class*="closeButton"],
+a[href$="/channels/@me/1000000000000000000"] + [class*="closeButton"],
+li:has(> [class*="linkTop"] a[href$="/channels/@me/1000000000000000000"]) [class*="closeButton"],
+div:has(> a[href$="/channels/@me/1000000000000000000"]) > [class*="closeButton"] {
+    display: none !important;
+}
+
+/* The "unavailable" alert, laid out like the settings page it echoes */
+.vc-nebula-alert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.vc-nebula-alertArt {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 4px;
+}
+
+/* Headings separating user accounts from bots in the account switcher */
+.nebula-account-group {
+    margin: 12px 0 4px;
+    color: var(--header-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.nebula-account-group:first-child {
+    margin-top: 0;
+}
+
+/* The panel shown in place of the pages Nebula cannot serve */
+.nebula-blocked-page {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: var(--background-primary, #313338);
+    text-align: center;
+}
+
+.nebula-blocked-art {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 12px;
+}
+
+.nebula-blocked-title {
+    margin: 0;
+    color: var(--header-primary);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nebula-blocked-body {
+    max-width: 520px;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.nebula-blocked-body p {
+    margin: 10px 0 0;
+}

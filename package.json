@@ -1,0 +1,172 @@
+{
+  "name": "nebula",
+  "productName": "Nebula",
+  "version": "1.2.4",
+  "description": "Nebula - se connecter Ã  Discord avec un compte ou un token de bot",
+  "author": {
+    "name": "aiko-chan-ai",
+    "email": "aiko@shiroko.onmicrosoft.com"
+  },
+  "repository": {
+    "url": "https://github.com/nebula-client/nebula"
+  },
+  "license": "GPL-3.0",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "npm run build:ts && npm run start",
+    "test:vencord": "npm run vencord && npm run test",
+    "test:typescript": "tsc --noEmit",
+    "build:ts": "tsc && tsc-alias",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "vencord": "node scripts/syncReadme.mjs && node scripts/applyNebulaOverlay.mjs && tsx scripts/vencordBuild.ts",
+    "core:update": "tsx scripts/update.ts",
+    "start": "electron .",
+    "mac": "electron-builder -m",
+    "win": "electron-builder -w",
+    "linux": "electron-builder -l",
+    "build:bin": "electron-builder",
+    "build": "npm run build:deps && npm run build:ts && npm run build:bin",
+    "build:fast": "npm run vencord && npm run build:ts && electron-builder -w --dir",
+    "build:deps": "npm run vencord",
+    "requirement": "npm install && tsx scripts/vencordClone.ts && node scripts/applyNebulaOverlay.mjs"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/express": "^4.17.23",
+    "@types/http-proxy": "^1.17.17",
+    "@types/ini": "^4.1.1",
+    "@types/js-beautify": "^1.14.3",
+    "@types/jsdom": "^28.0.3",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^26.1.1",
+    "@types/probe-image-size": "^7.2.5",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^17.23.2",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-simple-header": "^1.2.2",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "js-beautify": "^1.15.4",
+    "jsdom": "^29.1.1",
+    "pnpm": "^11.17.0",
+    "prettier": "^3.9.6",
+    "tsc-alias": "^1.9.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.65.0"
+  },
+  "dependencies": {
+    "@sapphire/snowflake": "^3.5.5",
+    "dexie": "^4.4.4",
+    "discord-api-types": "^0.38.50",
+    "discord-protos": "^1.2.271",
+    "electron-context-menu": "^4.1.2",
+    "electron-log": "^5.4.4",
+    "electron-updater": "^6.8.9",
+    "express": "^4.21.2",
+    "ini": "^6.0.0",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "murmurhash": "^2.0.1",
+    "probe-image-size": "^7.3.0",
+    "selfsigned": "^2.4.1",
+    "undici": "^7.24.3"
+  },
+  "build": {
+    "files": [
+      "!docs",
+      "!scripts",
+      "!Vencord",
+      "!src",
+      "!tsconfig.json",
+      "!tsup.config.ts",
+      "!.eslintrc.json",
+      "!.gitattributes",
+      "!.gitignore",
+      "!.prettierrc.json",
+      "!eslint.config.mjs",
+      "!readme.md",
+      "assets",
+      "build",
+      "VencordExtension"
+    ],
+    "appId": "Nebula",
+    "productName": "Nebula",
+    "artifactName": "${productName}-${os}-${arch}.${ext}",
+    "copyright": "Copyright Â© 2026 aiko-chan-ai",
+    "mac": {
+      "category": "public.app-category.social-networking",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "darkModeSupport": true,
+      "icon": "./assets/icon.png",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "This app needs access to the microphone",
+        "com.apple.security.device.audio-input": true
+      }
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "desktop": {
+        "entry": {
+          "Name": "Nebula",
+          "GenericName": "Internet Messenger",
+          "Type": "Application",
+          "Categories": "Network;InstantMessaging;Chat;",
+          "Keywords": "discord;bot;vencord;electron;chat;"
+        }
+      },
+      "category": "Network",
+      "icon": "./assets/icon.png"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "./assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "license": "./LICENSE"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "B-loom",
+        "repo": "discord-bot-client-Nubula"
+      }
+    ],
+    "asar": false
+  }
+}
+

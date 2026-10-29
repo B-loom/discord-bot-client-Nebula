@@ -1,0 +1,186 @@
+.vc-nebula-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #5865f2 0%, #8b5cf6 55%, #c084fc 100%);
+    color: #fff;
+    overflow: hidden;
+}
+
+.vc-nebula-heroText {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.vc-nebula-heroTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    margin: 0;
+    font-size: 18px;
+}
+
+.vc-nebula-heroBody {
+    color: rgb(255 255 255 / 85%);
+    margin: 0;
+}
+
+.vc-nebula-heroEmoji {
+    width: 24px;
+    height: 24px;
+}
+
+.vc-nebula-heroArt {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 15%);
+    padding: 12px;
+}
+
+.vc-nebula-card {
+    background: var(--background-secondary, #2b2d31);
+    border-radius: 8px;
+    padding: 4px 16px;
+    margin-bottom: 12px;
+}
+
+.vc-nebula-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--background-modifier-accent, #3f4147);
+}
+
+.vc-nebula-row:last-child {
+    border-bottom: none;
+}
+
+.vc-nebula-rowLabel {
+    color: var(--header-secondary, #b5bac1);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.vc-nebula-rowValue {
+    color: var(--text-normal, #f2f3f5);
+    font-size: 14px;
+    font-family: var(--font-code, monospace);
+}
+
+.vc-nebula-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.vc-nebula-sectionText {
+    margin-bottom: 12px;
+}
+
+.vc-nebula-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 48px 24px;
+}
+
+.vc-nebula-emptyArt {
+    width: 72px;
+    height: 72px;
+    opacity: 0.9;
+}
+
+.vc-nebula-emptyText {
+    max-width: 420px;
+}
+
+.vc-nebula-doc {
+    max-width: 720px;
+    padding-bottom: 32px;
+}
+
+.vc-nebula-doc h1 {
+    margin-bottom: 8px;
+}
+
+.vc-nebula-doc h3 {
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+
+.vc-nebula-doc h5 {
+    margin-top: 14px;
+    margin-bottom: 2px;
+    color: var(--header-secondary, #b5bac1);
+}
+
+.vc-nebula-docText {
+    line-height: 1.5;
+}
+
+.vc-nebula-docItem {
+    color: var(--text-normal, #dbdee1);
+    line-height: 1.5;
+    margin-left: 20px;
+    list-style: disc;
+}
+
+.vc-nebula-docSpace {
+    height: 10px;
+}
+
+.vc-nebula-docCode {
+    background: var(--background-secondary, #2b2d31);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-family: var(--font-code, monospace);
+    font-size: 85%;
+}
+
+.vc-nebula-docList {
+    margin: 4px 0 4px 4px;
+    padding-left: 18px;
+    list-style: disc outside;
+}
+
+.vc-nebula-docList .vc-nebula-docItem {
+    margin-left: 0;
+    padding-left: 2px;
+}
+
+/* Callouts, rules and links in the documentation page */
+.vc-nebula-docQuote {
+    margin: 10px 0;
+    padding: 10px 14px;
+    border-left: 3px solid var(--brand-500);
+    border-radius: 4px;
+    background: var(--background-secondary-alt, rgb(0 0 0 / 15%));
+}
+
+.vc-nebula-docQuote .vc-nebula-docText:last-child {
+    margin-bottom: 0;
+}
+
+.vc-nebula-docRule {
+    height: 1px;
+    margin: 18px 0;
+    background: var(--background-modifier-accent);
+}
+
+.vc-nebula-docLink {
+    color: var(--text-link);
+    text-decoration: underline;
+}

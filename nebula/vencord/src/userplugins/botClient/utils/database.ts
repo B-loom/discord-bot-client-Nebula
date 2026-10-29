@@ -1,0 +1,141 @@
+/*
+ * Vencord, a Discord client mod
+ * Copyright (c) 2025 Vendicated and contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+import { Logger } from "@utils/Logger";
+import Dexie from "dexie";
+
+import { DexieExtended, registerMigrations } from "./migrations";
+import {
+    DefaultFrecencyUserSettings,
+    DefaultPreloadedUserSettings,
+    FrecencyUserSettings,
+    PreloadedUserSettings,
+} from "./proto";
+
+const logger = new Logger("BotClient:Database", "#B3EBF2");
+
+export class BotClientDatabase {
+    #db: DexieExtended;
+    get database() {
+        return this.#db;
+    }
+    constructor(name: string) {
+        this.#db = new Dexie(name) as DexieExtended;
+        this.init();
+    }
+    init() {
+        logger.log("Initializing database");
+        registerMigrations(this.#db);
+    }
+    // PrivateChannel methods
+    queryAllPrivateChannel(botId: string) {
+        logger.log("Querying all private channels for bot", botId);
+        return this.database.PrivateChannel.where("botId").equals(botId).toArray();
+    }
+    handleOpenPrivateChannel(botId: string, userId: string, channelId: string) {
+        logger.log("Opening private channel", { botId, userId, channelId });
+        return this.database.PrivateChannel.put({
+            botId,
+            channelId,
+            data: {
+                type: 1,
+                recipients: [
+                    {
+                        id: userId,
+                    },
+                ],
+                last_message_id: null,
+                is_spam: false,
+                id: channelId,
+                flags: 0,
+            },
+        });
+    }
+    handleClosePrivateChannel(botId: string, channelId: string) {
+        logger.log("Closing private channel", { botId, channelId });
+        return this.database.PrivateChannel.where({ botId, channelId }).delete();
+    }
+    clearDMsCache(botId: string) {
+        logger.log("Clearing DMs cache for bot", botId);
+        return this.database.PrivateChannel.where("botId").equals(botId).delete();
+    }
+    // PreloadedUserSettings & FrecencyUserSettings methods
+    async getPreloadedUserSettings(botId: string) {
+        logger.log("Getting preloaded user settings for bot", botId);
+        const v = await this.database.PreloadedUserSettings.get(botId);
+        if (!v) {
+            logger.warn("No preloaded user settings found, creating default");
+            await this.database.PreloadedUserSettings.put({
+                botId,
+                data: DefaultPreloadedUserSettings,
+            });
+            return DefaultPreloadedUserSettings;
+        } else {
+            // v.data.userContent = DefaultPreloadedUserSettings.userContent;
+            return v.data;
+        }
+    }
+    async getFrecencyUserSettings(botId: string) {
+        logger.log("Getting frecency user settings for bot", botId);
+        const v = await this.database.FrecencyUserSettings.get(botId);
+        if (!v) {
+            logger.warn("No frecency user settings found, creating default");
+            await this.database.FrecencyUserSettings.put({
+                botId,
+                data: DefaultFrecencyUserSettings,
+            });
+            return DefaultFrecencyUserSettings;
+        } else {
+            return v.data;
+        }
+    }
+    async getPreloadedUserSettingsBase64(botId: string) {
+        const data = await this.getPreloadedUserSettings(botId);
+        return PreloadedUserSettings.toBase64(data);
+    }
+    async getFrecencyUserSettingsBase64(botId: string) {
+        const data = await this.getFrecencyUserSettings(botId);
+        return FrecencyUserSettings.toBase64(data);
+    }
+    async SetPreloadedUserSettings(botId: string, settings: PreloadedUserSettings) {
+        logger.log("Setting preloaded user settings for bot", botId, settings);
+        await this.database.PreloadedUserSettings.put({
+            botId,
+            data: settings,
+        });
+    }
+    async SetFrecencyUserSettings(botId: string, settings: FrecencyUserSettings) {
+        logger.log("Setting frecency user settings for bot", botId, settings);
+        await this.database.FrecencyUserSettings.put({
+            botId,
+            data: settings,
+        });
+    }
+}
+
+const db = new BotClientDatabase(window.BotClientNative.getBotClientName());
+
+export default db;
+
+window.protoAPI.GetPreloadedUserSettings(async (botId: string) => {
+    const settings = await db.getPreloadedUserSettings(botId);
+    window.protoAPI.GetPreloadedUserSettingsResponse(botId, PreloadedUserSettings.toBase64(settings));
+});
+
+window.protoAPI.SetPreloadedUserSettings(async (botId: string, settings: string) => {
+    const decoded = PreloadedUserSettings.fromBase64(settings);
+    await db.SetPreloadedUserSettings(botId, decoded);
+});
+
+window.protoAPI.GetFrecencyUserSettings(async (botId: string) => {
+    const settings = await db.getFrecencyUserSettings(botId);
+    window.protoAPI.GetFrecencyUserSettingsResponse(botId, FrecencyUserSettings.toBase64(settings));
+});
+
+window.protoAPI.SetFrecencyUserSettings(async (botId: string, settings: string) => {
+    const decoded = FrecencyUserSettings.fromBase64(settings);
+    await db.SetFrecencyUserSettings(botId, decoded);
+});
