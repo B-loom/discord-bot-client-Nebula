@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nebula</title>
+<meta name="description" content="Un client Discord de bureau qui réunit tes comptes Discord et tes bots dans une seule application.">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="Nebula">
+<meta property="og:description" content="Tes comptes Discord et tes bots dans une seule application.">
+<meta property="og:image" content="icon.png">
+<style>
+    :root {
+        --bg: #0f1020;
+        --card: #1a1b2e;
+        --card-soft: #22233a;
+        --text: #e9e9f2;
+        --muted: #a2a3bd;
+        --brand: #7c5cff;
+        --brand-soft: #9b84ff;
+        --warn: #ffb86b;
+        --line: rgb(255 255 255 / 9%);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        background:
+            radial-gradient(1100px 700px at 20% -10%, #3b2d7a 0%, transparent 60%),
+            radial-gradient(900px 600px at 95% 10%, #2a1f5c 0%, transparent 55%),
+            var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+    }
+
+    .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 16px 80px;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 80px 0 48px;
+        text-align: center;
+    }
+
+    header img {
+        width: 104px;
+        height: 104px;
+        border-radius: 26px;
+        box-shadow: 0 12px 40px rgb(0 0 0 / 45%);
+    }
+
+    h1 {
+        margin: 22px 0 8px;
+        font-size: 46px;
+        letter-spacing: -0.5px;
+    }
+
+    .tagline {
+        max-width: 560px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 19px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 32px;
+    }
+
+    .btn {
+        display: inline-flex;
+        gap: 9px;
+        align-items: center;
+        padding: 13px 22px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-main {
+        background: var(--brand);
+        color: #fff;
+        box-shadow: 0 10px 28px rgb(124 92 255 / 35%);
+    }
+
+    .btn-main:hover { background: var(--brand-soft); }
+
+    .btn-ghost {
+        border-color: var(--line);
+        background: rgb(255 255 255 / 5%);
+        color: var(--text);
+    }
+
+    .btn-ghost:hover { background: rgb(255 255 255 / 10%); }
+
+    .btn svg { flex: 0 0 auto; }
+
+    .note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    section { margin-top: 56px; }
+
+    h2 {
+        margin: 0 0 18px;
+        font-size: 23px;
+    }
+
+    .grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--card);
+    }
+
+    .card h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+    }
+
+    .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .warn {
+        padding: 18px 20px;
+        border-left: 3px solid var(--warn);
+        border-radius: 10px;
+        background: var(--card-soft);
+    }
+
+    .warn + .warn { margin-top: 12px; }
+
+    .warn strong { color: var(--warn); }
+
+    .warn p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .steps {
+        margin: 0;
+        padding-left: 20px;
+        color: var(--muted);
+    }
+
+    .steps li { margin-bottom: 8px; }
+
+    .steps strong { color: var(--text); }
+
+    a { color: var(--brand-soft); }
+
+    footer {
+        margin-top: 64px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+        text-align: center;
+    }
+
+    @media (width <= 600px) {
+        header { padding-top: 56px; }
+        h1 { font-size: 36px; }
+        .tagline { font-size: 17px; }
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <header>
+        <img src="icon.png" alt="">
+        <h1>Nebula</h1>
+        <p class="tagline">
+            Tes comptes Discord et tes bots dans une seule application.
+            Une fenêtre par compte, le même client pour tous.
+        </p>
+
+        <div class="actions">
+            <!-- Toujours la dernière version publiée : rien à changer ici à chaque sortie -->
+            <a class="btn btn-main" href="https://github.com/B-loom/discord-bot-client-Nubula/releases/latest/download/Nebula-win-x64.exe">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 3v10.6l3.3-3.3 1.4 1.4-5.7 5.7-5.7-5.7 1.4-1.4L10 13.6V3h2ZM4 19h16v2H4v-2Z"/>
+                </svg>
+                Télécharger pour Windows
+            </a>
+            <a class="btn btn-ghost" href="https://discord.gg/TNTYSmy4mX">
+                <svg width="17" height="17" viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true">
+                    <path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"/>
+                </svg>
+                Serveur Discord
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/B-loom/discord-bot-client-Nubula">
+                <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+                </svg>
+                Code source
+            </a>
+        </div>
+
+        <p class="note">Windows 64 bits &middot; installateur &middot; mises à jour automatiques</p>
+    </header>
+
+    <section>
+        <h2>Ce que fait Nebula</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Comptes et bots ensemble</h3>
+                <p>Connexion par e-mail, par token de compte ou par token de bot. Captcha et double authentification gérés.</p>
+            </div>
+            <div class="card">
+                <h3>Autant de comptes que voulu</h3>
+                <p>Chacun dans sa fenêtre et sa session, rangés entre utilisateurs et bots.</p>
+            </div>
+            <div class="card">
+                <h3>Détection des jeux</h3>
+                <p>Le jeu en cours apparaît sur ton profil, sans le client officiel.</p>
+            </div>
+            <div class="card">
+                <h3>Éditeur de messages</h3>
+                <p>Embeds, boutons, fichiers et catalogue d'émojis, pour les bots.</p>
+            </div>
+            <div class="card">
+                <h3>Tout en français</h3>
+                <p>L'interface, les plugins et jusqu'aux messages d'erreur.</p>
+            </div>
+            <div class="card">
+                <h3>Mises à jour</h3>
+                <p>Nebula prévient quand une version paraît, la télécharge et l'installe au redémarrage.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Installer</h2>
+        <ol class="steps">
+            <li>Télécharge <strong>Nebula-win-x64.exe</strong> avec le bouton plus haut.</li>
+            <li>Lance-le. Windows affichera un avertissement, l'application n'étant pas signée par un certificat payant : passe par <strong>Informations complémentaires</strong> puis <strong>Exécuter quand même</strong>.</li>
+            <li>Choisis le dossier d'installation. C'est tout.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>À lire avant d'utiliser Nebula</h2>
+
+        <div class="warn">
+            <strong>Un client tiers est contraire aux conditions d'utilisation de Discord.</strong>
+            <p>Se connecter avec un compte utilisateur depuis autre chose que le client officiel peut entraîner la désactivation de ce compte. Les bots, eux, passent par l'API officielle et ne posent pas ce problème.</p>
+        </div>
+
+        <div class="warn">
+            <strong>Aucune responsabilité n'est assumée.</strong>
+            <p>Ni pour un compte banni, ni pour un bot supprimé, ni pour une perte de données, ni pour quoi que ce soit d'autre. Tu l'utilises à tes risques.</p>
+        </div>
+
+        <div class="warn">
+            <strong>Nebula n'est pas un projet original.</strong>
+            <p>C'est une version modifiée de <a href="https://github.com/aiko-chan-ai/DiscordBotClient">aiko-chan-ai/DiscordBotClient</a>, à qui revient tout le travail de fond. Quand Discord change et que le client casse, la correction est attendue du projet d'origine avant d'être reprise ici.</p>
+        </div>
+
+        <div class="warn">
+            <strong>Ce projet a été écrit avec <a href="https://claude.ai">Claude</a>.</strong>
+            <p>L'assistant d'Anthropic.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Un bug, une question&nbsp;?</h2>
+        <p style="color: var(--muted); margin-top: 0;">
+            Tout se passe sur <a href="https://discord.gg/TNTYSmy4mX">le serveur Discord</a>.
+            Pour un bug, dis ce que tu faisais, ce qui s'est passé, et si tu étais connecté
+            avec un compte ou avec un bot&nbsp;: les deux ne suivent pas le même chemin dans
+            l'application, et la réponse en dépend.
+        </p>
+    </section>
+
+    <footer>
+        Nebula &middot; <a href="https://github.com/B-loom/discord-bot-client-Nubula/releases">toutes les versions</a>
+    </footer>
+
+</div>
+</body>
+</html>
