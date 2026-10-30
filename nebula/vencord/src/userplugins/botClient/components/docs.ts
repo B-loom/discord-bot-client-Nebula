@@ -40,9 +40,15 @@ dans une seule application : une fenêtre par compte, le même client pour tous.
 
 ---
 
+## Le site
+
+**https://b-loom.github.io/discord-bot-client-Nebula/**
+
+Téléchargement, documentation, nouveautés et licence, au même endroit.
+
 ## Installer
 
-Télécharge l'installateur de la dernière version depuis la page
+Télécharge l'installateur de la dernière version depuis le site ou depuis la page
 [Releases](https://github.com/B-loom/discord-bot-client-Nebula/releases), puis lance-le.
 Il te laisse choisir le dossier d'installation et crée les raccourcis habituels.
 
