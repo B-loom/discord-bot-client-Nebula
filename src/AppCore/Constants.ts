@@ -88,6 +88,12 @@ export default class Constants extends null {
     static ModeratorUserId = "1391459588930404372";
     /** Where users are sent for help, shown in the welcome message */
     static SupportInvite = "https://discord.gg/TNTYSmy4mX";
+    /*
+     * Discord resolves a discord.gg link itself, in the client, so a button carrying one
+     * never reaches the app. This address means nothing to Discord, which therefore hands
+     * it over as an ordinary external link: that is where the invite gets copied.
+     */
+    static CopyInviteUrl = "https://nebula.invalid/copier-invitation";
     /** This fork's own repository, linked from the welcome message */
     static ProjectRepoUrl = "https://github.com/B-loom/discord-bot-client-Nubula";
     /*

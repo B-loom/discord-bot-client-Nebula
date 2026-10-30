@@ -192,8 +192,41 @@ export function ChangelogTab() {
     return <Markdown source={CHANGELOG} />;
 }
 
+type UpdateState = {
+    state: "idle" | "checking" | "up-to-date" | "available" | "downloading" | "ready" | "error";
+    version?: string;
+    percent?: number;
+    message?: string;
+};
+
+/** What each state means to someone reading the page, and the colour of its dot */
+const UPDATE_LABELS: Record<UpdateState["state"], { text: string; tone: "good" | "bad" | "wait"; }> = {
+    idle: { text: "Non vérifié", tone: "wait" },
+    checking: { text: "Vérification…", tone: "wait" },
+    "up-to-date": { text: "À jour", tone: "good" },
+    available: { text: "Mise à jour disponible", tone: "bad" },
+    downloading: { text: "Téléchargement…", tone: "wait" },
+    ready: { text: "Prête à installer", tone: "bad" },
+    error: { text: "Vérification impossible", tone: "bad" },
+};
+
+/** Follows the update as the main process reports it */
+function useUpdateState(): UpdateState {
+    const [state, setState] = React.useState<UpdateState>(
+        () => native()?.getUpdateState?.() ?? { state: "idle" },
+    );
+
+    React.useEffect(() => {
+        native()?.onUpdateState?.((next: UpdateState) => setState(next));
+    }, []);
+
+    return state;
+}
+
 export default function NebulaTab() {
     const [copied, setCopied] = React.useState(false);
+    const update = useUpdateState();
+    const updateLabel = UPDATE_LABELS[update.state] ?? UPDATE_LABELS.idle;
 
     const version = native()?.getBotClientVersion?.() ?? "inconnue";
     const name = native()?.getBotClientName?.() ?? "Nebula";
@@ -226,9 +259,10 @@ export default function NebulaTab() {
                         size={Button.Sizes.SMALL}
                         color={Button.Colors.WHITE}
                         look={Button.Looks.FILLED}
-                        onClick={() => native()?.openAccountLogin?.()}
+                        disabled={update.state === "checking" || update.state === "downloading"}
+                        onClick={() => native()?.checkForUpdates?.()}
                     >
-                        Ajouter un compte
+                        {update.state === "checking" ? "Vérification…" : "Vérifier les mises à jour"}
                     </Button>
                 </div>
                 <img src={BrandEmoji} alt="" className={cl("heroArt")} />
@@ -238,6 +272,14 @@ export default function NebulaTab() {
                 <div className={cl("card")}>
                     <Row label="Application" value={name} />
                     <Row label="Version" value={`v${version}`} />
+                    <div className={cl("row")}>
+                        <span className={cl("rowLabel")}>Mise à jour</span>
+                        <span className={cl("rowValue")}>
+                            <span className={cl(`dot-${updateLabel.tone}`)} />
+                            {updateLabel.text}
+                            {update.version && update.state === "available" ? ` (v${update.version})` : ""}
+                        </span>
+                    </div>
                     <Row label="Chromium" value={chrome} />
                     <Row label="Electron" value={electron} />
                     <Row label="Plateforme" value={navigator.platform} />
@@ -247,7 +289,27 @@ export default function NebulaTab() {
                     <Row label="Session" value={isUserSession ? "Compte utilisateur" : "Bot"} />
                     <Row label="Cœurs CPU" value={String(navigator.hardwareConcurrency ?? "inconnu")} />
                 </div>
+                {update.state === "downloading" && (
+                    <div className={cl("progress")}>
+                        <div className={cl("progressBar")} style={{ width: `${update.percent ?? 0}%` }} />
+                        <span className={cl("progressText")}>
+                            Téléchargement de la mise à jour : {update.percent ?? 0} %
+                        </span>
+                    </div>
+                )}
+                {update.state === "error" && update.message && (
+                    <Forms.FormText className={cl("updateError")}>{update.message}</Forms.FormText>
+                )}
                 <div className={cl("actions")}>
+                    {update.state === "ready" && (
+                        <Button
+                            size={Button.Sizes.SMALL}
+                            color={Button.Colors.GREEN}
+                            onClick={() => native()?.installUpdate?.()}
+                        >
+                            Redémarrer et installer
+                        </Button>
+                    )}
                     <Button
                         size={Button.Sizes.SMALL}
                         color={Button.Colors.PRIMARY}

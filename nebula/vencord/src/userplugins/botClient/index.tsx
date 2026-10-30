@@ -1507,6 +1507,7 @@ export default definePlugin({
         };
 
         this.guardNavigation();
+        this.guardInviteButton(nebulaAlert);
 
         /*
          * Catch it as early as possible: the modal openers first, so the window never
@@ -1588,7 +1589,14 @@ export default definePlugin({
         };
         // Invite Module
         const InviteModule = findByProps("acceptInvite", "resolveInvite");
+        const originalAcceptInvite = InviteModule.acceptInvite.bind(InviteModule);
         InviteModule.acceptInvite = async function (e) {
+            /*
+             * A bot cannot accept an invite — only the server owner adds it — so this was
+             * written to refuse outright. A real account joins servers like anywhere else,
+             * and was being refused with it.
+             */
+            if (isUserAccountSession()) return originalAcceptInvite(e);
             if (parseInt(originalSessionStorage.getItem("allShards") || "0") > 1) {
                 const invite = await this.resolveInvite(e.inviteKey);
                 const guildId = invite.invite.guild_id;
@@ -1632,7 +1640,10 @@ export default definePlugin({
         };
         // GuildTemplateModule
         const GuildTemplateModule = findByProps("loadTemplatesForGuild", "resolveGuildTemplate");
+        const originalLoadTemplates = GuildTemplateModule.loadTemplatesForGuild.bind(GuildTemplateModule);
         GuildTemplateModule.loadTemplatesForGuild = function (e) {
+            // Templates are a bot's dead end, not an account's
+            if (isUserAccountSession()) return originalLoadTemplates(e);
             return Promise.reject(`${window.BotClientNative.getBotClientName()} cannot use Guild Templates`);
         };
     },
@@ -1654,6 +1665,22 @@ export default definePlugin({
      * The page is covered rather than left behind: the panel sits over the content area,
      * so the sidebar stays usable and nothing of the page shows through.
      */
+    /**
+     * The invite is copied by the main process, which sees the click as a request to
+     * open a browser and answers it differently. All that is left here is saying so.
+     */
+    guardInviteButton(alert: (title: string, paragraphs: string[]) => void) {
+        try {
+            window.BotClientNative.onSupportInviteCopied((invite: string) => {
+                alert("Lien copié", [
+                    "Le lien du serveur est dans ton presse-papiers.",
+                    `Colle-le dans Discord pour rejoindre le serveur : ${invite}`,
+                ]);
+            });
+        } catch (error) {
+            BotClientLogger.warn("Impossible d'annoncer la copie du lien", error);
+        }
+    },
     guardNavigation() {
         const blocked = [
             {

@@ -2,6 +2,7 @@
 
 import { APIApplication, ApplicationFlags, GatewayIntentBits } from "discord-api-types/v10";
 import { app, BrowserWindow, dialog } from "electron";
+import { autoUpdater } from "electron-updater";
 import { ApplicationFlagsBitField, IntentsBitField } from "src/AppUtils/DiscordBitField";
 import { ApexExperiment, GuildExperiment, UserExperiment } from "src/AppUtils/Experiments";
 import GameDetection from "src/AppUtils/GameDetection";
@@ -155,6 +156,9 @@ export function setupIPCEvents (mainApp: DiscordBotClient) {
         .on(IPCEvent.GetIsUserToken, (event, token: string) => {
             event.returnValue = UserAuth.isUserToken(token ?? "");
         })
+        .on(IPCEvent.GetSupportInvite, event => {
+            event.returnValue = Constants.SupportInvite;
+        })
         .on(IPCEvent.GetBotAccountIds, event => {
             event.returnValue = UserAuth.accounts.filter(a => a.bot && a.id).map(a => a.id as string);
         })
@@ -209,6 +213,16 @@ export function setupIPCEvents (mainApp: DiscordBotClient) {
     });
     mainApp.ipcMain.handle(IPCEvent.AccountOpenWindow, (event, token: string) => {
         return mainApp.openClientWindow(token);
+    });
+    // Updates
+    mainApp.ipcMain.handle(IPCEvent.UpdateCheck, () => {
+        return mainApp.checkingForUpdates(true);
+    });
+    mainApp.ipcMain.handle(IPCEvent.UpdateInstall, () => {
+        autoUpdater.quitAndInstall(true, true);
+    });
+    mainApp.ipcMain.on(IPCEvent.UpdateGetState, event => {
+        event.returnValue = mainApp.updateState;
     });
     // Config Editor
     mainApp.ipcMain.handle(IPCEvent.MonacoEditorGetConfig, event => {

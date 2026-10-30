@@ -12,7 +12,12 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const readmePath = path.join(root, "README.md");
-const docsPath = path.join(root, "Vencord/src/userplugins/botClient/components/docs.ts");
+/*
+ * The documentation is written into the versioned source, not into the clone: the
+ * Nebula overlay is copied over the clone right after this runs, and would otherwise
+ * put the previous text back.
+ */
+const docsPath = path.join(root, "nebula/vencord/src/userplugins/botClient/components/docs.ts");
 
 const readme = fs.readFileSync(readmePath, "utf8");
 const docs = fs.readFileSync(docsPath, "utf8");

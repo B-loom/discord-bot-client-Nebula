@@ -97,6 +97,14 @@ télécharge en arrière-plan ; elle s'installe à la fermeture de l'application
 Les nouveautés de chaque version sont dans l'onglet **Nebula → Nouveautés** du client, et
 cette page est le texte que tu lis dans **Nebula → Documentation**.
 
+## Un bug, une question ?
+
+Rejoins le serveur Discord : **https://discord.gg/TNTYSmy4mX**
+
+C'est le seul endroit où je réponds. Pour un bug, dis ce que tu faisais, ce qui s'est passé,
+et si tu étais connecté avec un compte ou avec un bot — les deux ne suivent pas le même
+chemin dans l'application, et la réponse en dépend.
+
 ## Licence et crédits
 
 Travail d'origine : **[aiko-chan-ai/DiscordBotClient](https://github.com/aiko-chan-ai/DiscordBotClient)**.

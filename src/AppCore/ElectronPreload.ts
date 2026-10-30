@@ -97,6 +97,27 @@ contextBridge.exposeInMainWorld("BotClientNative", {
     rememberBot (token: string) {
         ipcRenderer.send(IPCEvent.RememberBot, token);
     },
+    /** The invite shown in the welcome message, copied rather than opened */
+    getSupportInvite () {
+        return ipcRenderer.sendSync(IPCEvent.GetSupportInvite) as string;
+    },
+    /** Told when the main process copied the invite instead of opening it */
+    onSupportInviteCopied (listener: (invite: string) => void) {
+        ipcRenderer.on(IPCEvent.SupportInviteCopied, (event, invite) => listener(invite));
+    },
+    // Updates
+    checkForUpdates () {
+        return ipcRenderer.invoke(IPCEvent.UpdateCheck);
+    },
+    installUpdate () {
+        return ipcRenderer.invoke(IPCEvent.UpdateInstall);
+    },
+    getUpdateState () {
+        return ipcRenderer.sendSync(IPCEvent.UpdateGetState);
+    },
+    onUpdateState (listener: (state: unknown) => void) {
+        ipcRenderer.on(IPCEvent.UpdateState, (event, state) => listener(state));
+    },
     /** Ids of the saved accounts that are bots, so the switcher can group them */
     getBotAccountIds () {
         return ipcRenderer.sendSync(IPCEvent.GetBotAccountIds) as string[];

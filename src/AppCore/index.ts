@@ -1,7 +1,7 @@
 /* Copyright Elysia © 2025. All rights reserved */
 
 import { randomUUID } from "crypto";
-import {
+import { clipboard,
     app,
     BrowserWindow,
     dialog,
@@ -39,6 +39,13 @@ import UserAuth from "./UserAuth";
  * emojis used by the welcome buttons. None of them exist there, so each request is
  * answered with a file shipped alongside the app.
  */
+export type UpdateState = {
+    state: "idle" | "checking" | "up-to-date" | "available" | "downloading" | "ready" | "error";
+    version?: string;
+    percent?: number;
+    message?: string;
+};
+
 function brandingFileFor (url: string) {
     if (url.includes("/badge-icons/")) return "nebula-badge.png";
     if (url.includes("/avatars/")) return "sakura-avatar.webp";
@@ -518,6 +525,8 @@ export class DiscordBotClient extends EventEmitter {
                 return { action: "deny" };
             }
 
+            if (this.copyInviteInstead(url, this.win.webContents)) return { action: "deny" };
+
             let protocolHandle: string;
 
             try {
@@ -570,6 +579,20 @@ export class DiscordBotClient extends EventEmitter {
         }, 15000).unref();
         notif.show();
     }
+    /**
+     * Where the update stands, so the Nebula tab can show it rather than leaving the
+     * person guessing. Every window is told, since each one has its own settings page.
+     */
+    updateState: UpdateState = { state: "idle" };
+
+    setUpdateState (next: UpdateState) {
+        this.updateState = next;
+        for (const window of BrowserWindow.getAllWindows()) {
+            if (window.isDestroyed()) continue;
+            window.webContents.send(IPCEvent.UpdateState, next);
+        }
+    }
+
     checkingForUpdates (forceEmitted = false) {
         if (!app.isPackaged) {
             // autoUpdater.forceDevUpdateConfig = true; // ! Test
@@ -580,9 +603,14 @@ export class DiscordBotClient extends EventEmitter {
                     silent: false,
                 });
             }
+            this.setUpdateState({
+                state: "error",
+                message: "Les mises à jour ne fonctionnent qu'une fois Nebula installée.",
+            });
             return Promise.resolve(false);
         }
 
+        this.setUpdateState({ state: "checking" });
         autoUpdater.logger = scope("AutoUpdater");
         autoUpdater.disableWebInstaller = true;
 
@@ -594,6 +622,7 @@ export class DiscordBotClient extends EventEmitter {
 
         return new Promise(resolve => {
             autoUpdater.on("update-available", info => {
+                this.setUpdateState({ state: "available", version: info.version });
                 const releaseUrl = `https://github.com/${Constants.GithubRepo}/releases/tag/v${info.version}`;
 
                 if (process.platform === "darwin") {
@@ -624,6 +653,7 @@ export class DiscordBotClient extends EventEmitter {
             });
 
             autoUpdater.on("update-not-available", info => {
+                this.setUpdateState({ state: "up-to-date", version: app.getVersion() });
                 if (forceEmitted) {
                     this.showNotification({
                         title: "Gestionnaire de mises à jour",
@@ -637,6 +667,7 @@ export class DiscordBotClient extends EventEmitter {
             autoUpdater.on("error", err => {
                 // Only log error, show notification if forced
                 this.logger.error("Error in auto-updater: " + err);
+                this.setUpdateState({ state: "error", message: err.message });
                 if (forceEmitted) {
                     this.showNotification(
                         {
@@ -654,6 +685,7 @@ export class DiscordBotClient extends EventEmitter {
 
             autoUpdater.on("download-progress", progressObj => {
                 const percent = Math.round(progressObj.percent);
+                this.setUpdateState({ state: "downloading", percent, version: this.updateState.version });
                 this.logger.debug(`Downloaded ${percent}%`);
                 if (this.tray && !this.tray.isDestroyed()) {
                     this.tray.setToolTip(`${Constants.AppName} v${app.getVersion()} - Téléchargement : ${percent}%`);
@@ -661,6 +693,7 @@ export class DiscordBotClient extends EventEmitter {
             });
 
             autoUpdater.on("update-downloaded", info => {
+                this.setUpdateState({ state: "ready", version: info.version, percent: 100 });
                 if (this.tray && !this.tray.isDestroyed()) {
                     this.tray.setToolTip(`${Constants.AppName} v${app.getVersion()}`);
                 }
@@ -864,6 +897,18 @@ export class DiscordBotClient extends EventEmitter {
                 frame.remove();
             })()`,
         );
+    }
+
+    /**
+     * The welcome message's invite cannot be joined from a browser, which knows nothing
+     * of the account signed in here. Rather than open a page that leads nowhere, the
+     * link is copied and the window is told to say so.
+     */
+    copyInviteInstead (url: string, sender: Electron.WebContents) {
+        if (!url.startsWith(Constants.CopyInviteUrl)) return false;
+        clipboard.writeText(Constants.SupportInvite);
+        sender.send(IPCEvent.SupportInviteCopied, Constants.SupportInvite);
+        return true;
     }
 
     openAccountLoginWindow (requestedBy?: BrowserWindow) {

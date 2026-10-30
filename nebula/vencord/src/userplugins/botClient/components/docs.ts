@@ -40,6 +40,16 @@ dans une seule application : une fenêtre par compte, le même client pour tous.
 
 ---
 
+## Installer
+
+Télécharge l'installateur de la dernière version depuis la page
+[Releases](https://github.com/B-loom/discord-bot-client-Nubula/releases), puis lance-le.
+Il te laisse choisir le dossier d'installation et crée les raccourcis habituels.
+
+Windows affichera probablement un avertissement au lancement : l'application n'est pas
+signée par un certificat payant. Passe par « Informations complémentaires » puis
+« Exécuter quand même ».
+
 ## Se connecter
 
 ### Avec un compte Discord
@@ -91,9 +101,20 @@ rien ici. Avec un compte utilisateur, le client Discord habituel revient.
 
 ## Mises à jour
 
-Nebula ne se met pas à jour toute seule et n'affiche aucune notification de mise à jour.
+Nebula regarde, peu après son démarrage, s'il existe une version plus récente sur la page
+des releases de ce dépôt. Si c'est le cas, une notification te le dit et la mise à jour se
+télécharge en arrière-plan ; elle s'installe à la fermeture de l'application.
+
 Les nouveautés de chaque version sont dans l'onglet **Nebula → Nouveautés** du client, et
 cette page est le texte que tu lis dans **Nebula → Documentation**.
+
+## Un bug, une question ?
+
+Rejoins le serveur Discord : **https://discord.gg/TNTYSmy4mX**
+
+C'est le seul endroit où je réponds. Pour un bug, dis ce que tu faisais, ce qui s'est passé,
+et si tu étais connecté avec un compte ou avec un bot — les deux ne suivent pas le même
+chemin dans l'application, et la réponse en dépend.
 
 ## Licence et crédits
 
@@ -103,11 +124,26 @@ Nebula en est une modification personnelle, écrite avec Claude.
 
 export const CHANGELOG = `# Nouveautés
 
-## v1.2.5 — Lien du serveur corrigé
+## v1.2.6 — Rejoindre un serveur, et les mises à jour
 
 ### Corrections
-- Le bouton « Rejoindre le serveur » du message d’accueil menait vers une invitation
-  expirée. Il pointe désormais vers la bonne.
+- Un compte utilisateur peut enfin rejoindre un serveur. Nebula refusait toute invitation
+  avec « cannot join guilds » : ce refus datait du plugin d’origine, écrit pour les bots,
+  et ne regardait pas le type de compte. Les modèles de serveur souffraient du même défaut.
+
+### Nouveautés
+- L’onglet Nebula indique si l’application est à jour, par une pastille verte ou rouge,
+  et un bouton lance la vérification.
+- Le téléchargement d’une mise à jour affiche sa progression, puis un bouton pour
+  redémarrer et l’installer.
+
+## v1.2.5 — Lien du serveur
+
+### Corrections
+- Le bouton du message d’accueil menait vers une invitation expirée.
+- Il copie maintenant le lien au lieu de l’ouvrir : le navigateur ne connaît pas ton
+  compte et ne pouvait donc pas te faire rejoindre le serveur. Une fenêtre confirme la
+  copie, et le lien est à coller dans Discord.
 
 ## v1.2.4 — Première version publiée
 

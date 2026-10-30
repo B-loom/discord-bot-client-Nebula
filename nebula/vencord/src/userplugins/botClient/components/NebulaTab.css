@@ -184,3 +184,56 @@
     color: var(--text-link);
     text-decoration: underline;
 }
+
+/* Update state: a dot whose colour says it at a glance */
+.vc-nebula-dot-good,
+.vc-nebula-dot-bad,
+.vc-nebula-dot-wait {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.vc-nebula-dot-good {
+    background: var(--status-positive, #23a55a);
+}
+
+.vc-nebula-dot-bad {
+    background: var(--status-danger, #f23f43);
+}
+
+.vc-nebula-dot-wait {
+    background: var(--text-muted, #949ba4);
+}
+
+/* Download progress, so the wait is not a blank screen */
+.vc-nebula-progress {
+    position: relative;
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--background-secondary-alt, rgb(0 0 0 / 20%));
+}
+
+.vc-nebula-progressBar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--brand-500, #5865f2);
+    opacity: 0.35;
+    transition: width 0.2s ease-out;
+}
+
+.vc-nebula-progressText {
+    position: relative;
+    color: var(--header-primary);
+    font-size: 14px;
+}
+
+.vc-nebula-updateError {
+    margin-top: 10px;
+    color: var(--text-danger, #f23f43);
+}

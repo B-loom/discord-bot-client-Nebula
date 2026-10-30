@@ -40,6 +40,13 @@ export class IPCEvent extends null {
     static AccountOpenWindow = "app:account:open_client_window";
     static RememberBot = "app:account:remember_bot";
     static GetBotAccountIds = "app:account:bot_ids";
+    static GetSupportInvite = "app:support_invite";
+    static SupportInviteCopied = "app:support_invite:copied";
+    // Updates
+    static UpdateCheck = "app:update:check";
+    static UpdateState = "app:update:state";
+    static UpdateGetState = "app:update:get_state";
+    static UpdateInstall = "app:update:install";
     static AccountTokenLogin = "app:account:token_login";
     // Monaco Editor IPC Events
     static MonacoEditorGetConfig = "app:editor:get_config";
