@@ -103,6 +103,12 @@ Nebula en est une modification personnelle, écrite avec Claude.
 
 export const CHANGELOG = `# Nouveautés
 
+## v1.2.5 — Lien du serveur corrigé
+
+### Corrections
+- Le bouton « Rejoindre le serveur » du message d’accueil menait vers une invitation
+  expirée. Il pointe désormais vers la bonne.
+
 ## v1.2.4 — Première version publiée
 
 ### Nouveautés

@@ -87,7 +87,7 @@ export default class Constants extends null {
     /** This user gets the Moderator Programs Alumni badge */
     static ModeratorUserId = "1391459588930404372";
     /** Where users are sent for help, shown in the welcome message */
-    static SupportInvite = "https://discord.gg/haA2qF9pzq";
+    static SupportInvite = "https://discord.gg/TNTYSmy4mX";
     /** This fork's own repository, linked from the welcome message */
     static ProjectRepoUrl = "https://github.com/B-loom/discord-bot-client-Nubula";
     /*
