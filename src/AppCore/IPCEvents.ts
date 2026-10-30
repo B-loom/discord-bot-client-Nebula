@@ -47,6 +47,10 @@ export class IPCEvent extends null {
     static UpdateState = "app:update:state";
     static UpdateGetState = "app:update:get_state";
     static UpdateInstall = "app:update:install";
+    // Screen share picker
+    static OpenInvite = "app:invite:open";
+    static PickerSources = "app:picker:sources";
+    static PickerChoose = "app:picker:choose";
     static AccountTokenLogin = "app:account:token_login";
     // Monaco Editor IPC Events
     static MonacoEditorGetConfig = "app:editor:get_config";

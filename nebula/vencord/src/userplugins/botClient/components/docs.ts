@@ -130,6 +130,44 @@ Nebula en est une modification personnelle, écrite avec Claude.
 
 export const CHANGELOG = `# Nouveautés
 
+## v1.2.7 — Partage d'écran, fenêtres intégrées et ménage
+
+### Nouveautés
+- **Le partage d'écran fonctionne.** Il n'avait jamais marché : aucun gestionnaire de
+  capture n'était installé, et Electron refusait la demande sans le moindre message. Un
+  sélecteur s'ouvre maintenant dans Discord, avec les onglets Écrans et Fenêtres, les
+  vignettes en direct et le choix d'inclure le son de l'ordinateur.
+- **La connexion se fait dans Discord**, dans une fenêtre du client, au lieu d'une fenêtre
+  séparée. Le captcha garde la sienne : hCaptcha n'est accepté que sur une page servie par
+  Discord.
+- Un plugin **NebulaStatut** empêche ton activité d'apparaître sur ton profil — le jeu en
+  cours, ou tout le reste si tu veux.
+- Les plugins écrits pour Nebula ont leur **propre section en haut** de la page des
+  plugins, séparés de ceux de Vencord.
+- Le message d'accueil gagne un bouton vers **le site du projet**.
+
+### Corrections
+- Le partage d'écran ne démarrait jamais, même une fois la capture en place : Nebula
+  coupait les opérations « streamCreate », « streamWatch », « streamPing » et « streamDelete » de
+  la passerelle pour tout le monde, alors que seul un bot ne peut s'en servir. Le flux
+  n'était donc jamais créé. « callConnect » souffrait du même défaut.
+- Les deux plugins de partage d'écran de Vencord, écrits pour les navigateurs, se mettaient
+  en travers : l'un remplaçait la capture et réclamait du 4K à 120 images par seconde,
+  l'autre écrivait 80 Mbit/s dans la négociation. Ils ne s'appliquent plus ici.
+- Une invitation ouverte depuis le client affichait la page « Application Discord
+  détectée ». Elle s'ouvre maintenant directement dans Discord.
+- Dans la fenêtre de connexion, le texte saisi était illisible sur un thème sombre et les
+  boutons mal placés.
+- Le sélecteur de comptes de Discord remplissait l'écran sans pouvoir défiler.
+- L'écran de connexion par token de bot était resté en anglais, comme la fenêtre de
+  réglages du partage d'écran.
+
+### Ménage
+- L'encart « Booste ton profil », le panneau de quêtes et la ligne d'activité sous ton nom
+  ne s'affichent plus : aucun des trois ne mène à quoi que ce soit ici.
+- La fenêtre « Envoyer un cadeau » affiche l'explication habituelle au lieu de l'offre
+  Nitro.
+
 ## v1.2.6 — Rejoindre un serveur, et les mises à jour
 
 ### Corrections

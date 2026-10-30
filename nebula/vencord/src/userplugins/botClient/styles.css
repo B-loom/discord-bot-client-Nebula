@@ -74,3 +74,65 @@ div:has(> a[href$="/channels/@me/1000000000000000000"]) > [class*="closeButton"]
 .nebula-blocked-body p {
     margin: 10px 0 0;
 }
+
+/*
+ * The quest panel above the account bar. Quests cannot progress here — Discord checks
+ * the running game from its own client — so the panel only takes room and disappoints.
+ * Targeted by the parts of the class name Discord keeps between builds, never by the
+ * hash after the underscore, which changes. "quest" alone would also catch "request".
+ */
+[class*="questAcceptedContent"],
+[class*="questProgress"],
+[class*="questsPanel"],
+[class*="questPanel"],
+[class*="contentCollapsedWrapper"],
+[class*="contentWrapperAccepted"],
+[class*="contentCollapsedAccepted"],
+[class*="questsUpsell"],
+[class*="questUpsell"] {
+    display: none !important;
+}
+
+/*
+ * The "Booste ton profil" card on the profile popout. Nebula blocks the Nitro pages it
+ * leads to, so the invitation goes nowhere; the same class covers Discord's other
+ * upsells, which are no more useful here.
+ */
+[class*="upsellContainer"] {
+    display: none !important;
+}
+
+/*
+ * Discord's own account chooser lists every saved account at full height, which fills the
+ * screen once there are more than a handful and leaves no way to reach the bottom. The
+ * list scrolls on its own instead; the class is the one its rows share.
+ */
+[class*="accountCard"] {
+    max-height: none;
+}
+
+[class*="list__"]:has(> [class*="accountCard"]) {
+    max-height: 52vh;
+    overflow-y: auto;
+}
+
+/*
+ * The line under the name in the account bar, which repeats whatever is playing. It is
+ * the first thing in view and says nothing one does not already know.
+ */
+[class*="panels_"] [class*="activityText"],
+[class*="panels_"] [class*="activityPanel"] {
+    display: none !important;
+}
+
+/* The panel shown in place of a window Nebula cannot serve */
+.nebula-blocked-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px;
+    background: var(--background-primary, #313338);
+    text-align: center;
+}

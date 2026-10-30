@@ -105,6 +105,48 @@ contextBridge.exposeInMainWorld("BotClientNative", {
     onSupportInviteCopied (listener: (invite: string) => void) {
         ipcRenderer.on(IPCEvent.SupportInviteCopied, (event, invite) => listener(invite));
     },
+    /*
+     * The whole sign-in now happens inside Discord, so every step of it has to be
+     * reachable from the client, not only the window opener kept below for the captcha.
+     */
+    accountList () {
+        return ipcRenderer.invoke(IPCEvent.AccountList);
+    },
+    accountLogin (login: string, password: string, captcha?: { key: string; rqtoken: string | null; } | null) {
+        return ipcRenderer.invoke(IPCEvent.AccountLogin, { login, password, captcha });
+    },
+    accountMfa (ticket: string, code: string, method: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountMfa, { ticket, code, method });
+    },
+    accountSendSms (ticket: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountSendSms, ticket);
+    },
+    accountSolveCaptcha (sitekey: string, rqdata: string | null) {
+        return ipcRenderer.invoke(IPCEvent.AccountSolveCaptcha, { sitekey, rqdata });
+    },
+    accountTokenLogin (token: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountTokenLogin, token);
+    },
+    accountRemove (token: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountRemove, token);
+    },
+    accountUse (token: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountUse, token);
+    },
+    accountOpenWindow (token: string) {
+        return ipcRenderer.invoke(IPCEvent.AccountOpenWindow, token);
+    },
+    /** An invite link clicked in the client, to be shown in Discord rather than on the web */
+    onOpenInvite (listener: (code: string) => void) {
+        ipcRenderer.on(IPCEvent.OpenInvite, (event, code) => listener(code));
+    },
+    // Screen sharing: the sources arrive here, the choice goes back
+    onScreenShareSources (listener: (sources: unknown[]) => void) {
+        ipcRenderer.on(IPCEvent.PickerSources, (event, sources) => listener(sources));
+    },
+    chooseScreenShare (id: string | null, audio: boolean) {
+        ipcRenderer.send(IPCEvent.PickerChoose, id, audio);
+    },
     // Updates
     checkForUpdates () {
         return ipcRenderer.invoke(IPCEvent.UpdateCheck);

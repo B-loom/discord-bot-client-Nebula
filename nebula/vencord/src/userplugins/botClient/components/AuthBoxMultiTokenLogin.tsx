@@ -5,6 +5,7 @@
  */
 
 import { Margins } from "@utils/margins";
+import { openAccountModal } from "./AccountModal";
 import { classes } from "@utils/misc";
 import { useEffect, useState } from "@webpack/common";
 
@@ -28,14 +29,14 @@ export default function AuthBoxMultiTokenLogin() {
             <div className={classes(authBoxModule.block, Margins.top20)}>
                 <div className={Margins.bottom20}>
                     <h5 className={classes(cl("h5"), cl("defaultMarginh5"))}>
-                        Bot Token
+                        Token du bot
                     </h5>
                     <div className={inputModule.inputWrapper}>
                         <input
                             className={inputModule.inputDefault}
                             name="token"
                             type="password"
-                            placeholder="Enter your bot token"
+                            placeholder="Colle le token de ton bot"
                             aria-label="Token"
                             autoComplete="off"
                             maxLength={100}
@@ -54,7 +55,7 @@ export default function AuthBoxMultiTokenLogin() {
                     className={cl("accountLink")}
                     onClick={ev => {
                         ev.preventDefault();
-                        (window as any).BotClientNative?.openAccountLogin();
+                        openAccountModal();
                     }}
                 >
                     Ajouter un compte Discord (e-mail &amp; mot de passe)

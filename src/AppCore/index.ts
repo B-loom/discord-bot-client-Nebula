@@ -24,6 +24,7 @@ import { autoUpdater } from "electron-updater";
 import EventEmitter from "events";
 import path from "path";
 import GameDetection from "src/AppUtils/GameDetection";
+import { installScreenShare } from "src/AppUtils/ScreenShare";
 import Util from "src/AppUtils/Utils";
 
 import server from "./APIServer";
@@ -52,7 +53,19 @@ function brandingFileFor (url: string) {
     if (url.includes("/banners/")) return "sakura-banner.webp";
     if (url.includes(`/emojis/${Constants.DiscordEmojiId}`)) return "discord-logo.svg";
     if (url.includes(`/emojis/${Constants.GithubEmojiId}`)) return "github-logo.svg";
+    if (url.includes(`/emojis/${Constants.SiteEmojiId}`)) return "icon.png";
     return null;
+}
+
+/**
+ * An invite link opened inside the client lands on discord.com's own invite page, the one
+ * that asks whether to open the desktop app — a dead end here, since Nebula *is* the
+ * application. The code is taken out of the link and handed to the client, which shows
+ * the invite the way it does for a link posted in a message.
+ */
+function inviteCodeFrom (url: string) {
+    const match = /^https?:\/\/(?:discord\.gg|(?:[a-z]+\.)?discord\.com\/invite)\/([A-Za-z0-9-]+)/.exec(url);
+    return match?.[1] ?? null;
 }
 
 export class DiscordBotClient extends EventEmitter {
@@ -303,6 +316,7 @@ export class DiscordBotClient extends EventEmitter {
             app.whenReady().then(async () => {
                 this.logger.info("Creating session...");
                 this.customSession = session.fromPartition("persist:elysia_dbc");
+                installScreenShare(this.customSession, this.logger);
                 // Enable DoH (Cloudflare)
                 app.configureHostResolver({
                     enableBuiltInResolver: true,
@@ -364,6 +378,7 @@ export class DiscordBotClient extends EventEmitter {
                     "https://cdn.discordapp.com/badge-icons/nebulacreator*",
                     `https://cdn.discordapp.com/emojis/${Constants.DiscordEmojiId}*`,
                     `https://cdn.discordapp.com/emojis/${Constants.GithubEmojiId}*`,
+                    `https://cdn.discordapp.com/emojis/${Constants.SiteEmojiId}*`,
                 ],
             },
             (details, callback) => {
@@ -522,6 +537,12 @@ export class DiscordBotClient extends EventEmitter {
                     `https://localhost:${this.port}/connections`,
                 ].some(e => url.includes(e))
             ) {
+                return { action: "deny" };
+            }
+
+            const invite = inviteCodeFrom(url);
+            if (invite) {
+                this.win.webContents.send(IPCEvent.OpenInvite, invite);
                 return { action: "deny" };
             }
 
@@ -788,6 +809,7 @@ export class DiscordBotClient extends EventEmitter {
      * the Vencord extension, the branding redirects and the stripe block.
      */
     async prepareAccountSession (target: Electron.Session) {
+        installScreenShare(target, this.logger);
         target.webRequest.onBeforeRequest(
             {
                 urls: [
@@ -797,6 +819,7 @@ export class DiscordBotClient extends EventEmitter {
                     "https://cdn.discordapp.com/badge-icons/nebulacreator*",
                     `https://cdn.discordapp.com/emojis/${Constants.DiscordEmojiId}*`,
                     `https://cdn.discordapp.com/emojis/${Constants.GithubEmojiId}*`,
+                    `https://cdn.discordapp.com/emojis/${Constants.SiteEmojiId}*`,
                 ],
             },
             (details, callback) => {

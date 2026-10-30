@@ -215,6 +215,8 @@ function PluginSettings() {
 
     const plugins = [] as JSX.Element[];
     const requiredPlugins = [] as JSX.Element[];
+    // The plugins written for Nebula come first, apart from Vencord's own
+    const nebulaPlugins = [] as JSX.Element[];
 
     const showApi = searchValue.status === SearchStatus.API_PLUGINS;
     for (const p of sortedPlugins) {
@@ -245,7 +247,7 @@ function PluginSettings() {
                 </Tooltip>
             );
         } else {
-            plugins.push(
+            const card = (
                 <PluginCard
                     onRestartNeeded={(name, key) => changes.handleChange(`${name}.${key}`)}
                     disabled={false}
@@ -254,6 +256,9 @@ function PluginSettings() {
                     key={p.name}
                 />
             );
+
+            if (p.authors?.some(author => author.name === "Nebula")) nebulaPlugins.push(card);
+            else plugins.push(card);
         }
     }
 
@@ -263,8 +268,21 @@ function PluginSettings() {
 
             <UIElementsButton />
 
+            {nebulaPlugins.length > 0 && (
+                <>
+                    <HeadingTertiary className={classes(Margins.top20, Margins.bottom8)}>
+                        Plugins Nebula
+                    </HeadingTertiary>
+                    <Paragraph className={Margins.bottom8}>
+                        Écrits pour ce client, et absents de Vencord.
+                    </Paragraph>
+                    <div className={cl("grid")}>{nebulaPlugins}</div>
+                    <Divider className={Margins.top20} />
+                </>
+            )}
+
             <HeadingTertiary className={classes(Margins.top20, Margins.bottom8)}>
-                Filters
+                Filtres
             </HeadingTertiary>
 
             <ErrorBoundary noop>
@@ -306,14 +324,14 @@ function PluginSettings() {
                 </div>
             </ErrorBoundary>
 
-            <HeadingTertiary className={Margins.top20}>Plugins</HeadingTertiary>
+            <HeadingTertiary className={Margins.top20}>Plugins Vencord</HeadingTertiary>
 
             {plugins.length || requiredPlugins.length
                 ? (
                     <div className={cl("grid")}>
                         {plugins.length
                             ? plugins
-                            : <Paragraph>No plugins meet the search criteria.</Paragraph>
+                            : <Paragraph>Aucun plugin ne correspond à cette recherche.</Paragraph>
                         }
                     </div>
                 )
@@ -324,13 +342,13 @@ function PluginSettings() {
             <Divider className={Margins.top20} />
 
             <HeadingTertiary className={classes(Margins.top20, Margins.bottom8)}>
-                Required Plugins
+                Plugins nécessaires
             </HeadingTertiary>
 
             <div className={cl("grid")}>
                 {requiredPlugins.length
                     ? requiredPlugins
-                    : <Paragraph>No plugins meet the search criteria.</Paragraph>
+                    : <Paragraph>Aucun plugin ne correspond à cette recherche.</Paragraph>
                 }
             </div>
         </SettingsTab >
@@ -340,7 +358,7 @@ function PluginSettings() {
 function makeDependencyList(deps: string[]) {
     return (
         <>
-            <Paragraph>This plugin is required by:</Paragraph>
+            <Paragraph>Ce plugin est nécessaire à :</Paragraph>
             {deps.map((dep: string) => <Paragraph key={dep} className={cl("dep-text")}>{dep}</Paragraph>)}
         </>
     );

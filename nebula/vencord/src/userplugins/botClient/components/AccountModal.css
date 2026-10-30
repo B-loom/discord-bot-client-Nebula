@@ -1,0 +1,112 @@
+/*
+ * The sign-in, shown inside Discord rather than in a window of its own.
+ * Colours come from Discord's own variables so the window follows the theme instead of
+ * printing dark text on a dark background.
+ */
+
+.vc-nebula-account-header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vc-nebula-account-title {
+    margin: 0;
+    color: var(--header-primary);
+}
+
+.vc-nebula-account-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.vc-nebula-account-content {
+    padding-bottom: 12px;
+}
+
+.vc-nebula-account-label {
+    margin: 16px 0 6px;
+    color: var(--header-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.vc-nebula-account-wide {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.vc-nebula-account-separator {
+    margin: 22px 0 4px;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.vc-nebula-account-error {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--status-danger, #f23f43);
+    border-radius: 6px;
+    background: var(--background-secondary-alt);
+    color: var(--status-danger, #f23f43);
+    font-size: 14px;
+}
+
+.vc-nebula-account-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.vc-nebula-account-method,
+.vc-nebula-account-method-current {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.vc-nebula-account-method:hover {
+    background: var(--background-modifier-hover);
+    color: var(--header-primary);
+}
+
+.vc-nebula-account-method-current {
+    background: var(--brand-experiment-15a, rgb(88 101 242 / 15%));
+    color: var(--header-primary);
+}
+
+.vc-nebula-account-done {
+    padding: 4px 0;
+}
+
+/*
+ * Discord's own input inherits a colour that comes out dark on a dark theme inside this
+ * window, so what is typed cannot be read. The colour is stated outright.
+ */
+.vc-nebula-account-content input,
+.vc-nebula-account-content input::placeholder {
+    color: var(--text-normal) !important;
+}
+
+.vc-nebula-account-content input::placeholder {
+    opacity: 0.45;
+}
+
+/* Keep the footer buttons on one line, the way Discord lays its own out */
+.vc-nebula-account-footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+}

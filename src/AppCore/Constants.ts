@@ -94,6 +94,8 @@ export default class Constants extends null {
      * it over as an ordinary external link: that is where the invite gets copied.
      */
     static CopyInviteUrl = "https://nebula.invalid/copier-invitation";
+    /** The project page, linked from the welcome message */
+    static ProjectSiteUrl = "https://b-loom.github.io/discord-bot-client-Nebula/";
     /** This fork's own repository, linked from the welcome message */
     static ProjectRepoUrl = "https://github.com/B-loom/discord-bot-client-Nebula";
     /*
@@ -103,6 +105,7 @@ export default class Constants extends null {
      */
     static DiscordEmojiId = "1000000000000000001";
     static GithubEmojiId = "1000000000000000002";
+    static SiteEmojiId = "1000000000000000003";
     static DefaultBio = "<a:emoji_1:1399479404706660373> Nebula on top";
     static VerboseAPIServerLogging = false; // Journaliser chaque requête coûte du processeur et des écritures disque
     // Database

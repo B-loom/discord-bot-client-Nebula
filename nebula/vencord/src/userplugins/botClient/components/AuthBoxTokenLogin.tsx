@@ -5,6 +5,7 @@
  */
 
 import "./AuthBoxTokenLogin.css";
+import { openAccountModal } from "./AccountModal";
 
 import { classNameFactory } from "@utils/css";
 import { Margins } from "@utils/margins";
@@ -42,7 +43,7 @@ export default function AuthBoxTokenLogin() {
                     <h5
                         className={classes(cl("h5"), cl("defaultMarginh5"), error && cl("error"))}
                     >
-                        Bot Token
+                        Token du bot
                         {error ? (
                             <span className={cl("errorMessage")}>
                                 <span className={cl("errorSeparator")}>-</span>
@@ -55,7 +56,7 @@ export default function AuthBoxTokenLogin() {
                             className={classes(inputModule.inputDefault, error && inputModule.inputError)}
                             name="token"
                             type="password"
-                            placeholder="Enter your bot token"
+                            placeholder="Colle le token de ton bot"
                             aria-label="Token"
                             autoComplete="off"
                             maxLength={100}
@@ -80,7 +81,7 @@ export default function AuthBoxTokenLogin() {
                         LoginToken.loginToken(state);
                     }}
                 >
-                    <div className={contentModule.contents}>Login</div>
+                    <div className={contentModule.contents}>Connexion</div>
                 </button>
                 <div className={cl("separator")}>ou</div>
                 <button
@@ -88,7 +89,7 @@ export default function AuthBoxTokenLogin() {
                     className={cl("accountLink")}
                     onClick={ev => {
                         ev.preventDefault();
-                        window.BotClientNative?.openAccountLogin();
+                        openAccountModal();
                     }}
                 >
                     Se connecter avec un compte Discord (e-mail &amp; mot de passe)

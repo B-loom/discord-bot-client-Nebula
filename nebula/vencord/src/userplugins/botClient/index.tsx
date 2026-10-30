@@ -48,6 +48,8 @@ import SettingsPlugin from "@plugins/_core/settings";
 
 import AuthBoxMultiTokenLogin, { multiTokenState } from "./components/AuthBoxMultiTokenLogin";
 import AuthBoxTokenLogin from "./components/AuthBoxTokenLogin";
+import { blockUnavailableModals } from "./components/BlockedModals";
+import { listenForScreenShare } from "./components/ScreenSharePicker";
 import NebulaTab, { BotBillingTab, ChangelogTab, NebulaIcon, ReadmeTab } from "./components/NebulaTab";
 // Components
 import { IconEmbedSvg } from "./icon.svg";
@@ -875,30 +877,30 @@ export default definePlugin({
                     match: /(voiceStateUpdate\()(\w+)(\){)/,
                     replace: "$& $2 = $self.voiceStateUpdatePatch($2, this.send.bind(this));",
                 },
-                // Disable Events:
+                // Switched off for bots only: an account uses every one of these
                 {
                     match: /callConnect\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /streamCreate\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /streamWatch\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /streamPing\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /streamDelete\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /streamSetPaused\(((\w+,?)+)?\){/,
-                    replace: "$& return;",
+                    replace: "$& if(!$self.isUserAccountSession())return;",
                 },
                 {
                     match: /remoteCommand\(((\w+,?)+)?\){/,
@@ -1507,6 +1509,19 @@ export default definePlugin({
         };
 
         this.guardNavigation();
+        listenForScreenShare();
+        blockUnavailableModals();
+        /*
+         * An invite clicked here is shown by Discord itself, instead of the web page that
+         * asks whether to open the desktop app — which Nebula already is.
+         */
+        try {
+            window.BotClientNative.onOpenInvite((code: string) => {
+                NavigationRouter.transitionTo(`/invite/${code}`);
+            });
+        } catch (error) {
+            BotClientLogger.warn("Impossible de suivre les invitations", error);
+        }
         this.guardInviteButton(nebulaAlert);
 
         /*

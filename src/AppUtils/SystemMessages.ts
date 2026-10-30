@@ -92,6 +92,13 @@ Ouvre la fenêtre de connexion pour ajouter un compte avec son adresse e-mail et
                             url: Constants.ProjectRepoUrl,
                             emoji: { id: Constants.GithubEmojiId, name: "github", animated: false },
                         },
+                        {
+                            type: 2,
+                            style: 5,
+                            label: "Le site",
+                            url: Constants.ProjectSiteUrl,
+                            emoji: { id: Constants.SiteEmojiId, name: "nebula", animated: false },
+                        },
                     ],
                 },
             ],

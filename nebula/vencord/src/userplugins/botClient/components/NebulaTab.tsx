@@ -5,6 +5,7 @@
  */
 
 import "./NebulaTab.css";
+import { openAccountModal } from "./AccountModal";
 
 import { classNameFactory } from "@utils/css";
 import { Button, Forms, React } from "@webpack/common";
@@ -72,7 +73,7 @@ export function BotBillingTab() {
                     <Button
                         size={Button.Sizes.SMALL}
                         color={Button.Colors.BRAND}
-                        onClick={() => native()?.openAccountLogin?.()}
+                        onClick={() => openAccountModal()}
                     >
                         Se connecter avec un compte
                     </Button>
@@ -340,7 +341,7 @@ export default function NebulaTab() {
                     <Button
                         size={Button.Sizes.SMALL}
                         color={Button.Colors.BRAND}
-                        onClick={() => native()?.openAccountLogin?.()}
+                        onClick={() => openAccountModal()}
                     >
                         Ouvrir la fenêtre de connexion
                     </Button>
