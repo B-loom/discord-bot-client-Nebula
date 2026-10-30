@@ -5,7 +5,7 @@ import path from "path";
 import UserPatch from "src/AppUtils/UserPatch";
 
 const GithubUserName = "B-loom";
-const GithubRepoName = "discord-bot-client-Nubula";
+const GithubRepoName = "discord-bot-client-Nebula";
 
 export default class Constants extends null {
     static BlacklistRoutes = [
@@ -95,7 +95,7 @@ export default class Constants extends null {
      */
     static CopyInviteUrl = "https://nebula.invalid/copier-invitation";
     /** This fork's own repository, linked from the welcome message */
-    static ProjectRepoUrl = "https://github.com/B-loom/discord-bot-client-Nubula";
+    static ProjectRepoUrl = "https://github.com/B-loom/discord-bot-client-Nebula";
     /*
      * Buttons may only carry an emoji Discord knows, so two ids are reserved here and
      * their pictures are redirected to files shipped with the app, the same way the

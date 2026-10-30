@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nouveautés · Nebula</title>
+<meta name="description" content="Un client Discord de bureau qui réunit tes comptes Discord et tes bots dans une seule application.">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<meta property="og:title" content="Nouveautés · Nebula">
+<meta property="og:description" content="Tes comptes Discord et tes bots dans une seule application.">
+<meta property="og:image" content="icon.png">
+</head>
+<body>
+
+<nav class="topbar">
+    <a class="brand" href="index.html">
+        <img src="icon.png" alt="">
+        <span>Nebula</span>
+        <span class="version">v1.2.6</span>
+    </a>
+    <div class="nav-links"><a class="nav-link" href="index.html">Accueil</a><a class="nav-link" href="documentation.html">Documentation</a><a class="nav-link current" href="changelog.html">Nouveautés</a><a class="nav-link" href="licence.html">Licence</a></div>
+</nav>
+
+<main class="wrap">
+<article class="prose changelog"><h1>Nouveautés</h1>
+<h2>v1.2.6 — Rejoindre un serveur, et les mises à jour</h2>
+<h3>Corrections</h3>
+<ul><li>Un compte utilisateur peut enfin rejoindre un serveur. Nebula refusait toute invitation avec « cannot join guilds » : ce refus datait du plugin d’origine, écrit pour les bots, et ne regardait pas le type de compte. Les modèles de serveur souffraient du même défaut.</li></ul>
+<h3>Nouveautés</h3>
+<ul><li>L’onglet Nebula indique si l’application est à jour, par une pastille verte ou rouge, et un bouton lance la vérification.</li><li>Le téléchargement d’une mise à jour affiche sa progression, puis un bouton pour redémarrer et l’installer.</li></ul>
+<h2>v1.2.5 — Lien du serveur</h2>
+<h3>Corrections</h3>
+<ul><li>Le bouton du message d’accueil menait vers une invitation expirée.</li><li>Il copie maintenant le lien au lieu de l’ouvrir : le navigateur ne connaît pas ton compte et ne pouvait donc pas te faire rejoindre le serveur. Une fenêtre confirme la copie, et le lien est à coller dans Discord.</li></ul>
+<h2>v1.2.4 — Première version publiée</h2>
+<h3>Nouveautés</h3>
+<ul><li>Nebula prévient quand une nouvelle version est publiée. La recherche vise désormais le dépôt du projet, et non plus celui d’origine dont les versions auraient remplacé Nebula par une autre application.</li></ul>
+<h3>Changements</h3>
+<ul><li>Le projet s’installe par un véritable installateur Windows, et le code est publié sur GitHub.</li></ul>
+<h2>v1.2.3 — Boutons dans le message d’accueil</h2>
+<h3>Changements</h3>
+<ul><li>Le lien du serveur en texte brut laisse place à deux boutons : rejoindre le serveur Discord, et ouvrir le projet sur GitHub, chacun avec son logo.</li></ul>
+<h2>v1.2.2 — Ménage et fenêtre de connexion</h2>
+<h3>Corrections</h3>
+<ul><li>La fenêtre de connexion ne coupait plus le haut de la liste quand les comptes étaient nombreux, et le formulaire se retrouvait hors d’écran. La liste défile désormais seule.</li></ul>
+<h3>Changements</h3>
+<ul><li>Le build de Discohook, sa copie dans les ressources et les sources Android ont été retirés du projet : environ 200 Mo qui ne servaient plus à rien.</li><li>Le code écrit pour Vencord vit maintenant dans nebula/, versionné, et se recopie sur le clone à chaque compilation. Une mise à jour de Vencord ne l’efface plus.</li></ul>
+<h2>v1.2.1 — Les quêtes aussi</h2>
+<h3>Changements</h3>
+<ul><li>Les quêtes sont bloquées sur les deux clients : leur progression est vérifiée par le client officiel de Discord, donc elles n’avanceraient jamais ici, compte ou bot.</li></ul>
+<h2>v1.1.9 — Blocage au cas par cas</h2>
+<h3>Changements</h3>
+<ul><li>Seul Nitro est bloqué sur les deux clients, puisque ni un bot ni Nebula ne peuvent gérer un abonnement. La Boutique, les Quêtes et la Découverte ne le sont que pour un bot : un compte Discord y a toute sa place.</li><li>Le panneau retrouve mieux le bord de la barre latérale, qui change d’une page à l’autre.</li></ul>
+<h2>v1.1.8 — Le message remplace la page</h2>
+<h3>Changements</h3>
+<ul><li>Nitro, la Boutique, les Quêtes et la Découverte affichent le message à la place de la page, en grand, au lieu de renvoyer à l’accueil. La barre latérale reste utilisable.</li></ul>
+<h2>v1.1.7 — Français et pages bloquées</h2>
+<h3>Nouveautés</h3>
+<ul><li>Les plugins de Vencord sont décrits en français, et la page qui les liste aussi.</li><li>NebulaApparence permet de changer le nom affiché et le pseudo séparément.</li></ul>
+<h3>Corrections</h3>
+<ul><li>La boutique, Nitro et les quêtes sont enfin bloquées, ainsi que la découverte pour un bot. Le filtre posé sur le routeur de Discord ne voyait pas les liens de la barre latérale ; il surveille maintenant l'adresse elle-même.</li><li>La fiche d'auteur des plugins Nebula montrait le profil d'un contributeur de Vencord, dont l'identifiant avait été repris par erreur. Elle affiche désormais Nebula.</li></ul>
+<h2>v1.1.6 — Documentation, apparence et pages bloquées</h2>
+<h3>Nouveautés</h3>
+<ul><li>Un plugin « NebulaApparence » permet de changer le nom affiché et de choisir ses badges. Tout est local : rien n'est envoyé à Discord et personne d'autre ne le voit.</li><li>Les plugins écrits pour Nebula portent son logo dans la liste des plugins.</li><li>La boutique, Nitro et les quêtes expliquent pourquoi elles ne fonctionnent pas ici au lieu de s'ouvrir vides, et la découverte de serveurs fait de même pour un bot.</li></ul>
+<h3>Changements</h3>
+<ul><li>Les numéros de version avancent d'un cran à la fois. Les anciennes versions ont été renumérotées : le compte s'arrête à 1.0.9, puis reprend à 1.1.1, 1.1.2, et ainsi de suite.</li><li>Le message d'accueil renvoie vers le serveur Discord plutôt que vers un compte.</li><li>La page Documentation est désormais le README du projet, recopié à chaque compilation, et sait afficher les encadrés, les séparateurs et les liens.</li></ul>
+<h2>v1.1.5 — Comptes groupés partout</h2>
+<h3>Corrections</h3>
+<ul><li>Le volet rapide de bascule sépare lui aussi les comptes utilisateurs des bots, comme la fenêtre « Gérer les comptes ». Les deux listes lisent le même magasin, qui rend désormais les comptes groupés.</li></ul>
+<h2>v1.1.4 — Jeux et comptes</h2>
+<h3>Nouveautés</h3>
+<ul><li>Les jeux en cours apparaissent enfin sur le profil. La liste des processus détectés ne suffisait pas : Nebula publie maintenant une véritable activité, le même chemin que les clients de présence enrichie.</li><li>Le sélecteur de comptes sépare les comptes utilisateurs des bots sous deux intitulés, au lieu de tout empiler dans une seule liste.</li></ul>
+<h3>Corrections</h3>
+<ul><li>L'écran « Application Discord détectée » ne remplace plus le client. Il s'affichait parce que le client se croyait sur le web ; Nebula est l'application de bureau.</li></ul>
+<h2>v1.1.3 — Identité et sobriété</h2>
+<h3>Corrections</h3>
+<ul><li>La limite de comptes est réellement levée. Le premier correctif ne touchait que la troncature qui suit l'ajout ; le refus venait du bouton lui-même, qui affichait l'erreur au lieu d'ouvrir la connexion. Les deux sont corrigés.</li><li>Plus aucune trace du nom d'origine : dépôt, identifiant de session, page de téléchargement, éditeur de configuration et en-têtes portent désormais Nebula.</li></ul>
+<h3>Allègements</h3>
+<ul><li>Cinq services de Chromium dont Nebula ne se sert pas sont désactivés : découverte Cast sur le réseau, téléchargement de règles d'optimisation, traduction, communication de remplissage automatique et suggestions de contenu.</li><li>Le cache disque est plafonné à 64 Mo, là où Chromium le laissait grossir sans limite.</li><li>L'écriture du stockage sur le disque passe d'une fois par minute à une fois toutes les cinq minutes, les moments qui comptent restant couverts.</li></ul>
+<h2>v1.1.2 — Plus de cinq comptes</h2>
+<h3>Nouveautés</h3>
+<ul><li>Le sélecteur accepte <strong>cent comptes</strong> au lieu de cinq. Discord ne refusait pas le sixième : son code coupait la liste au cinquième et déconnectait les suivants. Ni constante nommée ni fonction de contrôle, le chiffre était écrit dans l'opération de découpe, trouvé en lisant les modules chargés par le client.</li></ul>
+<h2>v1.1.1 — Comptes en double</h2>
+<h3>Corrections</h3>
+<ul><li>Un compte connecté plusieurs fois n'apparaît plus en double dans la liste ni dans le menu. Chaque connexion produit un token différent, et les entrées étaient comparées par token au lieu de l'identifiant du compte.</li><li>Le champ de token de bot a quitté la fenêtre de connexion : il faisait doublon avec celui de l'écran d'accueil.</li><li>L'état « compte utilisateur » est remis à zéro quand Discord refuse le token ou à la déconnexion, au lieu de rester actif alors que plus personne n'est connecté.</li></ul>
+<h2>v1.0.9 — Jeton, sobriété, mises à jour</h2>
+<h3>Nouveautés</h3>
+<ul><li>Connexion à un compte <strong>avec un token</strong>, sans mot de passe ni code à deux facteurs. Le token est vérifié auprès de Discord avant d'être enregistré, pour que rien ne casse plus tard sans explication.</li></ul>
+<h3>Allègements</h3>
+<ul><li>Plus aucune journalisation des requêtes : chaque image et chaque script chargés par Discord écrivaient une ligne sur le disque, ce qui coûtait du processeur en permanence.</li><li>La détection des jeux examine les processus une fois par minute au lieu de quatre, et s'arrête complètement quand aucune fenêtre n'est affichée.</li></ul>
+<h3>Corrections</h3>
+<ul><li>Plus de notification de mise à jour venant du projet d'origine. Nebula interrogeait son dépôt, et accepter une de ses versions aurait remplacé Nebula par une autre application.</li></ul>
+<h2>v1.0.8 — Émojis, fichiers et fenêtres</h2>
+<h3>Nouveautés</h3>
+<ul><li>L'éditeur a un <strong>catalogue d'émojis</strong> : un bouton ouvre la liste, rangée par serveur, avec une recherche. Plus besoin de copier un identifiant à la main, ni pour le texte ni pour les boutons.</li><li>L'éditeur accepte les <strong>pièces jointes</strong> : par le bouton ou par glisser-déposer, dix fichiers de 10 Mo au maximum. Un message peut désormais ne contenir qu'un fichier.</li></ul>
+<h3>Corrections</h3>
+<ul><li>Les boutons de la barre de titre agissent sur leur propre fenêtre. Réduire ou agrandir depuis une deuxième fenêtre pilotait la première, parce que la fenêtre visée était déduite d'un nom et non de celle d'où venait le clic.</li><li>La fenêtre d'indisponibilité reprend la présentation de la page des paramètres.</li></ul>
+<h2>v1.0.7 — Les bots se reconnectent</h2>
+<h3>Corrections</h3>
+<ul><li>Un bot ne pouvait plus se connecter après son premier lancement. En le mémorisant pour l'afficher dans la liste des comptes, son jeton se retrouvait au redémarrage parmi ceux des comptes utilisateurs — or ces jetons-là sont envoyés à Discord tels quels, sans le préfixe réservé aux bots. Les bots sont désormais exclus de cette liste.</li><li>Les greffes posées sur Discord sont isolées les unes des autres : si l'une échoue, elle est signalée et les suivantes s'installent quand même, au lieu d'abandonner tout ce qui vient après.</li></ul>
+<h2>v1.0.6 — L'éditeur envoie vraiment</h2>
+<h3>Corrections</h3>
+<ul><li>L'éditeur de message envoie enfin. La liaison avec le client était bien établie, mais la page rejetait le canal parce qu'elle vérifiait l'origine du message : le canal est remis depuis le monde isolé du préchargement, où cette origine n'est pas la page elle-même.</li><li>Les nouvelles fenêtres n'ont plus de barre de titre du système : elles reprennent l'habillage de la fenêtre principale, où Discord dessine la sienne.</li><li>Le créateur garde ses vrais badges. Les badges décoratifs ajoutés à tous les profils ne s'appliquent plus au sien, qui n'affiche donc que ce qu'il a réellement obtenu, plus celui de Nebula.</li><li>Les bots sont mémorisés dès qu'ils se connectent, et apparaissent dans leur catégorie du menu de la barre des tâches sans avoir à passer par la fenêtre de connexion.</li><li>Créer ou rejoindre un serveur est intercepté plus tôt, à l'ouverture de la fenêtre et plus seulement à la validation.</li></ul>
+<h2>v1.0.5 — Éditeur de message Nebula</h2>
+<h3>Nouveautés</h3>
+<ul><li><strong>Nouvel éditeur de message</strong>, écrit pour Nebula, à la place de celui emprunté ailleurs. Il gère le contenu, jusqu'à dix embeds complets (titre, description, couleur, auteur, miniature, grande image, pied de page, date, champs alignés) et des boutons qui ouvrent un lien, avec émojis personnalisés. L'aperçu se met à jour pendant la frappe et la mention « bêta » a disparu.</li><li>Le bouton de l'éditeur n'apparaît plus que sur un bot, puisqu'il envoie avec les identifiants du bot.</li><li>Créer ou rejoindre un serveur depuis un bot affiche une explication : un bot rejoint un serveur par son lien d'invitation OAuth, ajouté par le propriétaire du serveur.</li><li>Les comptes enregistrés sont rangés en deux catégories, <strong>comptes utilisateurs</strong> et <strong>bots</strong>, dans la fenêtre de connexion comme dans le menu de la barre des tâches. Un bot ouvert dans sa propre fenêtre est mémorisé pour la prochaine fois.</li></ul>
+<h2>v1.0.4 — Chaque fenêtre à sa place</h2>
+<h3>Corrections</h3>
+<ul><li>Se connecter à un compte depuis une deuxième fenêtre ne détourne plus la première. La fenêtre de connexion retient celle qui l'a ouverte et y renvoie le compte.</li><li>La page indisponible dit la vérité selon le cas : sur un compte, que Nebula ne prend pas en charge cette page et qu'il faut passer par le client officiel ; sur un bot, qu'un bot n'a ni Nitro ni abonnement.</li><li>Le badge Creator Nebula s'affiche aussi sur un compte utilisateur. Son profil partait directement chez Discord, sans passer par l'étape qui ajoute le badge.</li></ul>
+<h2>v1.0.3 — Plusieurs fenêtres et identité</h2>
+<h3>Nouveautés</h3>
+<ul><li>Le menu de la barre des tâches ouvre directement une <strong>nouvelle fenêtre Discord</strong>, et propose chaque compte enregistré dans sa propre fenêtre. Plusieurs Discord côte à côte, chacun avec sa session : un bot ici, ton compte là.</li><li>Badge <strong>Creator Nebula</strong> pour l'auteur du projet, avec le logo de l'application.</li><li>Le salon d'accueil indique qui contacter en cas de problème.</li></ul>
+<h3>Corrections</h3>
+<ul><li>Nitro, la boutique et les connexions de comptes sont marqués indisponibles pour tout le monde, pas seulement pour les bots : ils ont besoin des rouages de paiement et d'authentification de Discord, que ce client ne transporte pas. Ça se fait sur le client officiel.</li><li>Les jeux détectés sont tracés dans le journal au moment où le client les reçoit, pour distinguer un problème de détection d'un problème d'affichage.</li></ul>
+<h2>v1.0.2 — Détection des jeux et connexions</h2>
+<h3>Nouveautés</h3>
+<ul><li>Les jeux en cours sont détectés et affichés dans ton activité. Ce client n'a pas le module natif de Discord, alors Nebula lit la liste des processus du système et la compare au catalogue public des jeux reconnus, toutes les quinze secondes.</li><li>Un bot peut s'ouvrir dans sa propre fenêtre depuis la fenêtre de connexion : un compte dans une fenêtre, un bot dans une autre, en même temps.</li></ul>
+<h3>Corrections</h3>
+<ul><li>Les connexions de comptes externes fonctionnent de nouveau. Le retour d'authentification arrive sur une page sans jeton, et la liste des routes interdites aux bots s'appliquait à cette page comme s'il s'agissait d'un appel d'API, ce qui la refusait systématiquement. Cette liste ne vaut plus que pour les appels d'API.</li><li>Les messages privés enregistrés résistent mieux à un redémarrage brutal : le stockage est écrit sur le disque régulièrement, à la mise en veille et à l'extinction, au lieu d'attendre le bon vouloir du navigateur.</li><li>Les paramètres s'ouvrent plus vite. Les pages ajoutées par Nebula étaient reconstruites à chaque ouverture, ce qui forçait un remontage complet du panneau.</li><li>Une catégorie ne montre plus qu'une seule entrée « Indisponible » au lieu d'en empiler une par page masquée.</li></ul>
+<h2>v1.0.1 — Corrections et finitions</h2>
+<h3>Corrections</h3>
+<ul><li>Les paramètres ne font plus planter le client. La personnalisation du menu s'appliquait à chaque panneau imbriqué au lieu de la seule disposition racine, ce qui insérait des sections là où Discord n'en attend pas.</li><li>Le profil du salon système s'affiche enfin avec ses badges, sa biographie et sa bannière. Une route interne répondait 404 avant que le profil ne soit construit, parce que les fichiers de routes sont enregistrés par ordre alphabétique et qu'un attrape-tout passait devant.</li><li>Le salon système reste en tête des messages privés. Discord trie par identifiant du dernier message, et le sien était trop bas pour remonter.</li><li>Le client démarre en français même avec un bot, qui n'a pas de langue propre.</li></ul>
+<h3>Interface</h3>
+<ul><li>Le salon système porte tous les badges Discord et sa bannière est animée.</li><li>Sa date de création est celle de Discord, le 13 mai 2015.</li><li>Le logo de l'application est désormais rond.</li><li>Le menu de la barre des tâches a été allégé.</li><li>La fiche du plugin affiche Nebula comme éditeur.</li><li>La section Nebula est une catégorie à part entière, plus une entrée rangée sous Vencord.</li><li>Les pages indisponibles pour un bot couvrent aussi les applications connectées et les autorisations de messages.</li></ul>
+<h3>Sous le capot</h3>
+<ul><li>Les erreurs du client sont écrites dans le journal de l'application, ce qui permet de diagnostiquer un plantage sans ouvrir les outils de développement.</li><li>Les pages ajoutées par Nebula sont protégées : une erreur dans l'une d'elles s'affiche à sa place au lieu d'emporter le client.</li></ul>
+<h2>v1.0.0 — Nebula</h2>
+<h3>Connexion avec un compte Discord</h3>
+<ul><li>Nouvelle fenêtre de connexion avec adresse e-mail et mot de passe.</li><li>Gestion du captcha dans une fenêtre dédiée, servie depuis l'origine Discord.</li><li>Authentification à deux facteurs : application, SMS et codes de secours.</li><li>Les comptes sont enregistrés et réutilisables en un clic.</li><li>Chaque compte peut s'ouvrir dans sa propre fenêtre, avec sa propre session.</li></ul>
+<h3>Compatibilité des comptes utilisateurs</h3>
+<ul><li>Les messages privés, la liste des membres, les amis et le vrai profil ne sont plus remplacés par les données factices prévues pour les bots.</li><li>L'adresse e-mail et le numéro de téléphone affichés sont les vrais.</li><li>La déconnexion automatique qui visait les comptes non-bot a été supprimée.</li></ul>
+<h3>Interface</h3>
+<ul><li>L'application s'appelle désormais Nebula, avec une nouvelle icône.</li><li>Toute l'interface de l'application est en français.</li><li>Nouvelle section Nebula dans les paramètres, avec les informations de l'application, la documentation et cette page.</li><li>Les pages réservées aux comptes utilisateurs affichent une explication quand un bot est connecté.</li></ul></article>
+</main>
+
+<footer>
+    <a href="https://github.com/B-loom/discord-bot-client-Nebula">Code source</a>
+    <span>·</span>
+    <a href="https://github.com/B-loom/discord-bot-client-Nebula/releases">Toutes les versions</a>
+    <span>·</span>
+    <a href="https://discord.gg/TNTYSmy4mX">Serveur Discord</a>
+</footer>
+
+</body>
+</html>

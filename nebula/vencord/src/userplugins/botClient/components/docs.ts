@@ -43,7 +43,7 @@ dans une seule application : une fenêtre par compte, le même client pour tous.
 ## Installer
 
 Télécharge l'installateur de la dernière version depuis la page
-[Releases](https://github.com/B-loom/discord-bot-client-Nubula/releases), puis lance-le.
+[Releases](https://github.com/B-loom/discord-bot-client-Nebula/releases), puis lance-le.
 Il te laisse choisir le dossier d'installation et crée les raccourcis habituels.
 
 Windows affichera probablement un avertissement au lancement : l'application n'est pas

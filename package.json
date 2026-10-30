@@ -20,7 +20,8 @@
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write src/**/*.ts",
-    "vencord": "node scripts/syncReadme.mjs && node scripts/applyNebulaOverlay.mjs && tsx scripts/vencordBuild.ts",
+    "site": "node scripts/buildSite.mjs",
+    "vencord": "node scripts/syncReadme.mjs && node scripts/applyNebulaOverlay.mjs && tsx scripts/vencordBuild.ts && node scripts/buildSite.mjs",
     "core:update": "tsx scripts/update.ts",
     "start": "electron .",
     "mac": "electron-builder -m",
@@ -163,7 +164,7 @@
       {
         "provider": "github",
         "owner": "B-loom",
-        "repo": "discord-bot-client-Nubula"
+        "repo": "discord-bot-client-Nebula"
       }
     ],
     "asar": false
